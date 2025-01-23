@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  *
  * @author Utilisateur
  */
-public class FXMain extends Application {
+public class InterfaceGraphique extends Application {
     
     @Override
     public void start(Stage primaryStage) {
