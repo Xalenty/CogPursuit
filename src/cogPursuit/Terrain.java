@@ -14,6 +14,9 @@ public class Terrain implements Parametre {
             this.map[i] = new Case(i);
         }
     }
+    public Case getCase(int indice){
+        return this.map[indice];
+    }
 
     @Override
     public String toString() {

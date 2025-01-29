@@ -10,4 +10,5 @@ package cogPursuit;
  */
 public interface Parametre {
     int tailleMap = 30;
+    int maxJoueur = 4;
 }
