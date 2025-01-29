@@ -26,9 +26,8 @@ public class Case {
         
         this.nbJoueur +=1;
     }
-    public void suppJoueur(){ // retire 1 joueur de la case
-        
-        this.nbJoueur -=1;
+    public void suppJoueur(){ // retire 1 joueur de la case si il y en a
+        if(this.nbJoueur >0) this.nbJoueur -=1;
     }
     
     @Override
