@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CogPursuit",
+            "request": "launch",
+            "mainClass": "cogPursuit.CogPursuit",
+            "projectName": "CogPursuit_d8a7f6e5"
+        },
+        {
+            "type": "java",
+            "name": "Compile and Run JavaFX",
+            "request": "launch",
+            "mainClass": "JavaPackage.InterfaceGraphique",
+            "preLaunchTask": "Compile JavaFX",
+            "vmArgs": "--module-path /Users/romain/Documents/development/javafx/javafx-sdk-23.0.2/lib --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}
