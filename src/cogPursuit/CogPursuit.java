@@ -15,12 +15,15 @@ public class CogPursuit implements Parametre{
      */
     public static void main(String[] args) {
         Terrain terrain = new Terrain();
+        Question q = new Question();
+        
         Joueur test = new Joueur("Dupont");
         initSolo(test, terrain);
         System.out.println(terrain);
         
         
         System.out.println("Le jeu commence !");
+        
        /* while(test.getPos()<tailleMap){
             tour(test,terrain);
         }*/
