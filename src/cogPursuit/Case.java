@@ -34,8 +34,18 @@ public class Case {
     
     @Override
     public String toString(){
-        
-        if (nbJoueur>0){ //si il y a des joueurs
+        if(numCase==0 && nbJoueur==0) return "[D]";
+        else if (nbJoueur>0 && numCase==0){ //si il y a des joueurs su la premiere case
+            
+            String res = "[D:";
+            
+            for(int i =0; i<nbJoueur;i++){
+                res+="X";
+            }
+            res +="]";
+            return res;
+        }
+        else if (nbJoueur>0){ //si il y a des joueurs sur une case
             
             String res = "[";
             
