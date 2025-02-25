@@ -24,7 +24,7 @@ public class CogPursuit implements Parametre {
 
         System.out.println("Le jeu commence !");
 
-        while (test.getPos() < tailleMap) {
+        while (!test.fin()) {
             cTour++;
             System.out.println("Tour : "+ cTour);
             tour(test, terrain);

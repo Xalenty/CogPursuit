@@ -34,7 +34,11 @@ public class Joueur implements Parametre {
 
         return this.pos.getNumCase();
     }
-
+    
+    public boolean fin(){
+        if(pos.getNumCase()+1==tailleMap) return true;
+        else return false;
+    }
     //deplacement__
     public void deplacement(int direction, Terrain t) {// direction correspond au resultat de la question {1 ,2 ,3, 0 ,-1 , -1}
 
@@ -48,7 +52,7 @@ public class Joueur implements Parametre {
             this.pos = t.getCase(nextPos);
             System.out.println("pos : " + this.pos.getNumCase());
 
-        } else if (nextPos > tailleMap) { // si on sort du tableau +
+        } else if (nextPos > tailleMap-1) { // si on sort du tableau +
 
             System.out.println("D2");
             this.pos.suppJoueur(this);
