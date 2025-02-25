@@ -10,31 +10,34 @@ import java.util.Scanner;
  *
  * @author Utilisateur
  */
-public class CogPursuit implements Parametre{
+public class CogPursuit implements Parametre {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         Terrain terrain = new Terrain();
-        
-        Joueur test = new Joueur("Dupont");
+        int cTour = 0; 
+        Joueur test = new Joueur("Dupont",terrain);
         initSolo(test, terrain);
         System.out.println(terrain);
-        
-        
+
         System.out.println("Le jeu commence !");
-        
-        while(test.getPos()<tailleMap){
-            tour(test,terrain);
+
+        while (test.getPos() < tailleMap) {
+            cTour++;
+            System.out.println("Tour : "+ cTour);
+            tour(test, terrain);
+            System.out.println(terrain);
+            
         }
-    }   
-  
-    public static void initSolo(Joueur j, Terrain t){ // initialise 1 seul joueur
+    }
+
+    public static void initSolo(Joueur j, Terrain t) { // initialise 1 seul joueur
         j.deplacement(-1, t);// initialisera le joueur sur la premiere Case du terrain
     }
-    
-    public static void tour(Joueur j, Terrain t){
+
+    public static void tour(Joueur j, Terrain t) {
         int entreeJ = 0;
         Question q = new Question();
 
@@ -44,11 +47,19 @@ public class CogPursuit implements Parametre{
         q.getQestion(entreeJ);
         System.out.println(q);
         entreeJ = scan.nextInt();
-        
-        if(q.verification(entreeJ)){
-            j.addScore(q.getDiff());
+
+        if (q.verification(entreeJ)) {
+            System.out.println(t.getCase(0).listJ.size());
+
+            j.addScore(q.getDiff());//mettre a jour le score
+            j.deplacement(q.getDiff(), t); //+1 si facile, +2 si normal, +3 si difficile
+            System.out.println(j.getPos());
+            System.out.println(t.getCase(0).listJ.size());
+            return;
+        } else {
+            j.deplacement(1 - q.getDiff(), t);
+            return;
         }
-            
-    
+
     }
 }

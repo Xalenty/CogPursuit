@@ -8,53 +8,60 @@ package cogPursuit;
  *
  * @author ztsuk
  */
-public class Joueur implements Parametre{
+public class Joueur implements Parametre {
+
     private String pseudo = "";
     private int score = 0;
-    private int pos= -1; //permet de connaitre sur quel case le joueur est
+    private Case pos; //permet de connaitre sur quel case le joueur est
 
-    public Joueur(String p){
+    public Joueur(String p, Terrain t) {
         this.pseudo = p;
-        this.pos = 0; //origine de la carte
+        this.pos = t.getCase(0); //origine de la carte
     }
-    
+
     //score__
-    public void addScore(int n){
-         this.score += n;
+    public void addScore(int n) {
+        this.score += n;
     }
-    
-    
+
     //position__
-    public void setPos(int idCase){
-    
-        this.pos = idCase;
+    public void setPos(Case c) {
+
+        this.pos = c;
     }
-    
-    public int getPos(){
-        
-        return this.pos;
+
+    public int getPos() {
+
+        return this.pos.getNumCase();
     }
-    
+
     //deplacement__
-     public void deplacement(int direction, Terrain t){// direction correspond au resultat de la question {1 ,2 ,3, 0 ,-1 , -1}
-        
-        int nextPos = this.pos + direction; // donne l'indice de la prochaine case
-        
-        if(nextPos < tailleMap && nextPos >= 0){ // verifie que la prochaine case est dans le tableau
-        t.getCase(this.pos).suppJoueur();
-        t.getCase(nextPos).addJoueur();
-        this.setPos(nextPos);        
+    public void deplacement(int direction, Terrain t) {// direction correspond au resultat de la question {1 ,2 ,3, 0 ,-1 , -1}
+
+        int nextPos = this.pos.getNumCase() + direction; // donne l'indice de la prochaine case
+
+        if (nextPos < tailleMap && nextPos >= 0) { // verifie que la prochaine case est dans le tableau
+
+            System.out.println("D1");
+            this.pos.suppJoueur(this); //la case doit m'oublier
+            t.getCase(nextPos).addJoueur(this); 
+            this.pos = t.getCase(nextPos);
+            System.out.println("pos : " + this.pos.getNumCase());
+
+        } else if (nextPos > tailleMap) { // si on sort du tableau +
+
+            System.out.println("D2");
+            this.pos.suppJoueur(this);
+            t.getCase(tailleMap - 1).addJoueur(this);
+            this.setPos(t.getCase(tailleMap - 1));
+
+        } else { 
+
+            System.out.println("D3");
+            this.pos.suppJoueur(this); 
+            t.getCase(0).addJoueur(this);
+            this.setPos(t.getCase(0));
         }
-        
-        else if(nextPos>tailleMap){ // si on sort du tableau +
-            t.getCase(this.pos).suppJoueur();
-            t.getCase(tailleMap-1).addJoueur();
-            this.setPos(tailleMap-1);
-        }
-        
-        else 
-            t.getCase(this.pos).suppJoueur(); //si on sort du tableau -
-            t.getCase(0).addJoueur();
-            this.setPos(0);
+
     }
 }
