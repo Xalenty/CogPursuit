@@ -4,6 +4,8 @@
  */
 package cogPursuit;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Utilisateur
@@ -15,7 +17,6 @@ public class CogPursuit implements Parametre{
      */
     public static void main(String[] args) {
         Terrain terrain = new Terrain();
-        Question q = new Question();
         
         Joueur test = new Joueur("Dupont");
         initSolo(test, terrain);
@@ -24,9 +25,9 @@ public class CogPursuit implements Parametre{
         
         System.out.println("Le jeu commence !");
         
-       /* while(test.getPos()<tailleMap){
+        while(test.getPos()<tailleMap){
             tour(test,terrain);
-        }*/
+        }
     }   
   
     public static void initSolo(Joueur j, Terrain t){ // initialise 1 seul joueur
@@ -35,11 +36,19 @@ public class CogPursuit implements Parametre{
     
     public static void tour(Joueur j, Terrain t){
         int entreeJ = 0;
-        System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3");
+        Question q = new Question();
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
+        entreeJ = scan.nextInt();
+        q.getQestion(entreeJ);
+        System.out.println(q);
+        entreeJ = scan.nextInt();
         
-        
-        /*switch(entreeJ) 
-                case 1: */
+        if(q.verification(entreeJ)){
+            j.addScore(q.getDiff());
+        }
+            
     
     }
 }
