@@ -18,6 +18,11 @@ public class Joueur implements Parametre {
         this.pseudo = p;
         this.pos = t.getCase(0); //origine de la carte
     }
+    
+    @Override
+    public String toString(){
+        return this.pseudo;
+    }
 
     //score__
     public void addScore(int n) {
@@ -46,22 +51,18 @@ public class Joueur implements Parametre {
 
         if (nextPos < tailleMap && nextPos >= 0) { // verifie que la prochaine case est dans le tableau
 
-            System.out.println("D1");
             this.pos.suppJoueur(this); //la case doit m'oublier
             t.getCase(nextPos).addJoueur(this); 
             this.pos = t.getCase(nextPos);
-            System.out.println("pos : " + this.pos.getNumCase());
 
         } else if (nextPos > tailleMap-1) { // si on sort du tableau +
 
-            System.out.println("D2");
             this.pos.suppJoueur(this);
             t.getCase(tailleMap - 1).addJoueur(this);
             this.setPos(t.getCase(tailleMap - 1));
 
         } else { 
 
-            System.out.println("D3");
             this.pos.suppJoueur(this); 
             t.getCase(0).addJoueur(this);
             this.setPos(t.getCase(0));

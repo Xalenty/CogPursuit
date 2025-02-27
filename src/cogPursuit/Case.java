@@ -12,7 +12,7 @@ public class Case {
    
     private int numCase = -1; // id de la case 
     private int nbJoueur = 0; //nombre de joueur sur la case
-    public ArrayList<Joueur> listJ = new ArrayList<Joueur>();
+    private ArrayList<Joueur> listJ = new ArrayList<Joueur>();
 
     public Case(int i) {
         numCase = i;
@@ -40,7 +40,7 @@ public class Case {
             String res = "[D:";
             
             for(int i =0; i<nbJoueur;i++){
-                res+="X";
+                res+=listJ.get(i) + ". ";
             }
             res +="]";
             return res;
@@ -50,7 +50,7 @@ public class Case {
             String res = "[";
             
             for(int i =0; i<nbJoueur;i++){
-                res+="X";
+                res+=listJ.get(i) + ". ";
             }
             res +="]";
             return res;
