@@ -30,8 +30,12 @@ public class InterfaceGraphique extends Application {
             }
         });
         
+        Button test = new Button();
+        test.setText("bouton test");
+        
         StackPane root = new StackPane();
         root.getChildren().add(btn);
+        root.getChildren().add(test);
         
         Scene scene = new Scene(root, 300, 250);
         

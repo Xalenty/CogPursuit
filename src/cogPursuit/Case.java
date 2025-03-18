@@ -4,6 +4,8 @@
  */
 package cogPursuit;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ztsuk
@@ -11,14 +13,12 @@ package cogPursuit;
 public class Case {
    
     private int numCase = -1; // id de la case 
-    private int nbJoueur = 0; //nombre de joueur sur la case
+    private int nbJoueur = 0; //nombre de joueurs sur la case
+    private ArrayList<Joueur> listJ = new ArrayList<Joueur>();
+
 
     public Case(int i) {
         numCase = i;
-    }
-
-    public int getNumCase() { // permet de recuperer "l'id" de la case
-        return this.numCase;
     }
     
     
@@ -44,6 +44,10 @@ public class Case {
             return res;
         }
         
-        else return "[_]"; //si il ni en à pas
+        else return "[_]"; //s'il n'y en a pas
+    }
+    
+    public int getNumCase() { // permet de recuperer "l'id" de la case
+        return this.numCase;
     }
 }
