@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Case {
    
     private int numCase = -1; // id de la case 
-    private int nbJoueur = 0; //nombre de joueur sur la case
     private ArrayList<Joueur> listJ = new ArrayList<Joueur>();
 
     public Case(int i) {
@@ -24,32 +23,30 @@ public class Case {
     
     public void addJoueur(Joueur j){ // ajoute a joueur dans la case 
         this.listJ.add(j);
-        this.nbJoueur = listJ.size();
     }
     public void suppJoueur(Joueur j){ // retire 1 joueur de la case si il y en a
         this.listJ.remove(j);
-        this.nbJoueur = listJ.size();
 
     }
     
     @Override
     public String toString(){
-        if(numCase==0 && nbJoueur==0) return "[D]";
-        else if (nbJoueur>0 && numCase==0){ //si il y a des joueurs su la premiere case
+        if(numCase==0 && this.listJ.size()==0) return "[D]";
+        else if (this.listJ.size()>0 && numCase==0){ //si il y a des joueurs su la premiere case
             
             String res = "[D:";
             
-            for(int i =0; i<nbJoueur;i++){
+            for(int i =0; i<this.listJ.size();i++){
                 res+=listJ.get(i) + ". ";
             }
             res +="]";
             return res;
         }
-        else if (nbJoueur>0){ //si il y a des joueurs sur une case
+        else if (this.listJ.size()>0){ //si il y a des joueurs sur une case
             
             String res = "[";
             
-            for(int i =0; i<nbJoueur;i++){
+            for(int i =0; i<this.listJ.size();i++){
                 res+=listJ.get(i) + ". ";
             }
             res +="]";
