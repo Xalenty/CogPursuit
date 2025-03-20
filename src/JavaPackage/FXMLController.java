@@ -4,8 +4,10 @@
  */
 package JavaPackage;
 
+import java.awt.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -14,7 +16,11 @@ import javafx.fxml.Initializable;
  * @author Utilisateur
  */
 public class FXMLController implements Initializable {
-
+    @FXML
+    private Label welcomeText;
+    
+    @FXML
+    protected void onHelloButtonClick(){welcomeText.setText("welcome to JavaFX Application");}
     /**
      * Initializes the controller class.
      */
