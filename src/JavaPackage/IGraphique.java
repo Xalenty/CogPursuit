@@ -19,7 +19,7 @@ public class IGraphique extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Fxml.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
             primaryStage.setTitle("CogPursuit");
             primaryStage.setScene(new Scene(root, 1200, 900));
             primaryStage.show();

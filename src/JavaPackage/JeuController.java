@@ -7,14 +7,13 @@ package JavaPackage;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.fxml.FXML;
 
 /**
  * FXML Controller class
  *
  * @author ztsuk
  */
-public class FxmlController implements Initializable {
+public class JeuController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -22,19 +21,6 @@ public class FxmlController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-    @FXML
-    private void btnPlay() {
-        System.out.println("Bouton play");
-    }@FXML
-    private void btnOption() {
-
-    }@FXML
-    private void btnScores() {
-
-    }@FXML
-    private void btnQuitter() {
-        System.exit(0);
-    }
+    }    
     
 }
