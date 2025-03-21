@@ -93,7 +93,10 @@ public class CogPursuit implements Parametre {
     public void tour(Joueur j, Terrain t) {
         int entreeJ = 0;
         Scanner scan = new Scanner(System.in);
-        Question q = new Question();
+        Case temp =t.getCase(j.getPos()) ; 
+
+        Question q = new Question(temp.getTheme());
+
         // selection difficulté
         boolean selection = false;
         
@@ -105,8 +108,7 @@ public class CogPursuit implements Parametre {
                     System.out.println("degré de difficulté incorrecte.");
                 
                 else {
-                    Case temp =t.getCase(j.getPos()) ; 
-                    q.getQestion(entreeJ,temp.getTheme());
+                                        q.getQestion(entreeJ,temp.getTheme());
                     listeQ.add(q);
                     selection = true;
                 }
