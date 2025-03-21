@@ -9,9 +9,10 @@ public class Terrain implements Parametre {
     private Case[] map = new Case[tailleMap];
 
     public Terrain() {
+        int indiceTheme=0;
         for (int i = 0; i < tailleMap; i++) {
-
-            this.map[i] = new Case(i);
+            //faire la repartition des themes en fonctions du nb question/theme
+            this.map[i] = new Case(i, listeTheme[indiceTheme]);
         }
     }
     public Case getCase(int indice){

@@ -105,7 +105,8 @@ public class CogPursuit implements Parametre {
                     System.out.println("degré de difficulté incorrecte.");
                 
                 else {
-                    q.getQestion(entreeJ);
+                    Case temp =t.getCase(j.getPos()) ; 
+                    q.getQestion(entreeJ,temp.getTheme());
                     listeQ.add(q);
                     selection = true;
                 }

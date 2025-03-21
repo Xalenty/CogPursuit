@@ -43,7 +43,6 @@ public class Question {
     }
 
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
-
         if (selection == indiceSol) {
             System.out.println(selection);
 
@@ -55,7 +54,7 @@ public class Question {
         }
     }
 
-    public boolean getQestion(int entreeJ) { // entreeJ represente la difficultée choisis
+    public boolean getQestion(int entreeJ,String theme) { // entreeJ represente la difficultée choisis
 
         switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
             case 1: // facile

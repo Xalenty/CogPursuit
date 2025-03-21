@@ -12,9 +12,14 @@ public class Case {
    
     private int numCase = -1; // id de la case 
     private ArrayList<Joueur> listJ = new ArrayList<Joueur>();
-
-    public Case(int i) {
-        numCase = i;
+    private String theme="";
+    
+    public Case(int i, String t) {
+        this.numCase = i;
+        this.theme = t;
+    }
+     public String getTheme() { // permet de recuperer "l'id" de la case
+        return this.theme;
     }
 
     public int getNumCase() { // permet de recuperer "l'id" de la case
