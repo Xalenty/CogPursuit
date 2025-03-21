@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class CogPursuit implements Parametre {
 
     Terrain terrain;
-    //liste des joueurs
+    // liste des joueurs
     ArrayList<Joueur> listJ = new ArrayList<Joueur>();
 
     /**
@@ -26,10 +26,10 @@ public class CogPursuit implements Parametre {
         System.out.println("Bienvenue sur CogPursuit!");
         Scanner scan = new Scanner(System.in);
 
-        //faire boucler la demande si enteeJ incorrect
+        // faire boucler la demande si enteeJ incorrect
         boolean initialiser = false;
         while (!initialiser) {
-            //demande du nb joueur
+            // demande du nb joueur
             System.out.println("Entrez le nombre de joueurs (4 Max):");
             int entreeJ = scan.nextInt();
 
@@ -40,7 +40,7 @@ public class CogPursuit implements Parametre {
                 initialiser = true;
             }
         }
-
+        scan.close();
     }
 
     /**
@@ -63,7 +63,7 @@ public class CogPursuit implements Parametre {
 
                 if (this.listJ.get(i).fin()) {
                     System.out.println(this.listJ.get(i) + " a Gagné !");
-                    //envoyer les scores en bdd
+                    // envoyer les scores en bdd
                     return;
                 }
             }
@@ -84,6 +84,7 @@ public class CogPursuit implements Parametre {
         for (int i = 0; i < nbJoueur; i++) {// initialisera les joueurs sur la premiere Case du terrain
             listJ.get(i).deplacement(-1, terrain);
         }
+        scan.close();
     }
 
     /**
@@ -94,48 +95,55 @@ public class CogPursuit implements Parametre {
         Question q = new Question();
         Scanner scan = new Scanner(System.in);
 
-        //selection difficulté
+        // selection difficulté
         boolean selection = false;
         while (!selection) {
             System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-                if(entreeJ>3||entreeJ<1)System.out.println("degré de difficulté incorrecte.");
-                else{q.getQestion(entreeJ);
+                if (entreeJ > 3 || entreeJ < 1)
+                    System.out.println("degré de difficulté incorrecte.");
+                else {
+                    q.getQestion(entreeJ);
 
-                selection = true;
+                    selection = true;
                 }
 
             } else {
                 System.out.println("Type de difficultée incorrecte.");
-                scan.next(); //pour éviter une boucle infinie
+                scan.next(); // pour éviter une boucle infinie
             }
         }
 
-        //selection reponse
+        // selection reponse
         selection = false;
         while (!selection) {
             System.out.println(q);
-            
+
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-                
+
                 if (q.verification(entreeJ)) {
 
-                    j.addScore(q.getDiff());//mettre a jour le score
-                    j.deplacement(q.getDiff(), t); //+1 si facile, +2 si normal, +3 si difficile
+                    j.addScore(q.getDiff());// mettre a jour le score
+                    j.deplacement(q.getDiff(), t); // +1 si facile, +2 si normal, +3 si difficile
+                    scan.close();
+
                     return;
-                    
+
                 } else {
                     j.deplacement(1 - q.getDiff(), t);
+                    scan.close();
+
                     return;
                 }
 
             } else {
                 System.out.println("Type de réponse incorrecte.");
-                scan.next(); //pour éviter une boucle infinie
+                scan.next(); // pour éviter une boucle infinie
             }
         }
+        scan.close();
 
     }
 }
