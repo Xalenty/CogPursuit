@@ -34,10 +34,9 @@ public class MenuController implements Initializable {
     //public MenuController(){
     //CogPursuit jeu = new CogPursuit();
     //}
-    
     private void touchePressee(KeyEvent event) {
         if (KeyCode.ESCAPE == event.getCode()) {// Effectuer une action lorsque la touche "Échap" est pressée
-            
+
             if (!modeJeu.isDisable()) {
                 inverseAffichage(hub, modeJeu);
 
@@ -92,27 +91,28 @@ public class MenuController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private boolean loop = true;
+
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle rb) { //se lance au chargement de la page FXML
+        if (loop) {
+            origine.setFocusTraversable(true);
+            origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
+                if (nScene != null) {
+                    scene = nScene;
+                    scene.setOnKeyPressed(this::touchePressee);
+                    origine.requestFocus(); //fait le focus une fois que la scène est définie
+                    loop = !loop;
+                } else {
+                    System.out.println("Chargement...");
+                }
+            });
 
-        origine.setFocusTraversable(true);
-        origine.sceneProperty().addListener((observable, oldScene, newScene) -> {
-            if (newScene != null) {
-                scene = newScene;
-                scene.setOnKeyPressed(this::touchePressee);
-                origine.requestFocus(); // Demander le focus une fois que la scène est définie
-                System.out.println("oui");
-            }
-        });
-        origine.requestFocus();
-        scene = origine.getScene();
-
-        if (scene != null) {
-            scene.setOnKeyPressed(this::touchePressee);
         } else {
-            System.out.println("erreur scene");
+            return;
         }
+
     }
 
 }
