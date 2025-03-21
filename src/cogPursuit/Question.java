@@ -44,9 +44,13 @@ public class Question {
 
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
 
-        if ((selection - 1) == indiceSol) {
+        if (selection == indiceSol) {
+            System.out.println(selection);
+
+            System.out.println("Bonne Réponse!");
             return true;
         } else {
+            System.out.println("Mauvaise Réponse!");
             return false;
         }
     }
