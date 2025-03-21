@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns:fx="http://javafx.com/fxml">
+<VBox alignment="CENTER" fx:controller="JavaPackage.FxmlController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns:fx="http://javafx.com/fxml">
    <children>
-      <Button mnemonicParsing="false" text="Jouer" />
-      <Button mnemonicParsing="false" text="Options" />
-      <Button mnemonicParsing="false" text="Scores" />
-      <Button mnemonicParsing="false" text="Quitter" />
+      <Button onAction="#btnPlay" text="Jouer" />
+      <Button onAction="#btnOption" text="Options" />
+      <Button onAction="#btnScores" text="Scores" />
+      <Button onAction="#btnQuitter" text="Quitter" />
    </children>
 </VBox>

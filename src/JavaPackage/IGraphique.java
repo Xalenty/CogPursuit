@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
 /**
  *
  * @author ztsuk
@@ -20,10 +19,7 @@ public class IGraphique extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            System.out.println("erreur");
             Parent root = FXMLLoader.load(getClass().getResource("Fxml.fxml"));
-            System.out.println("erreur");
-
             primaryStage.setTitle("CogPursuit");
             primaryStage.setScene(new Scene(root, 1200, 900));
             primaryStage.show();
