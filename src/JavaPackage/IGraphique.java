@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
-package JavaPackageMaxime;
+package JavaPackage;
 
 import java.io.IOException;
 import javafx.application.Application;
@@ -21,7 +21,7 @@ public class IGraphique extends Application {
     public void start(Stage primaryStage) throws IOException {
         try {
             System.out.println("erreur");
-            Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Fxml.fxml"));
             System.out.println("erreur");
 
             primaryStage.setTitle("CogPursuit");
