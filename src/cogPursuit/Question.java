@@ -4,30 +4,32 @@
  */
 package cogPursuit;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 /**
  *
  * @author ztsuk
  */
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 public class Question {
 
-    private Dictionary<Integer, String> d = new Hashtable<>();
+    Dictionary<Integer, String> reponses = new Hashtable<>();
     private String intituler = "";
-    private String theme = "";
-    private String[] mReponses = new String[4];
-    private int indiceSolution = -1;
+    private int indiceSol = 0;
+
     private int diff = 0; // difficulter
 
     public Question() {
-        // recuperer les question de la bdd ici
-        mReponses[0] = "oui";
-        mReponses[1] = "non";
-        mReponses[2] = "non";
-        mReponses[3] = "non";
+        intituler = "c'est dur?";
+        //repartition du theme
+        reponses.put(1, "Oui");
+        reponses.put(2, "Non");
+        reponses.put(3, "Non");
+        reponses.put(4, "Non");
 
-        indiceSolution = 0;
+        indiceSol = 1;
+
     }
 
     public String getIntituler() { // pour afficher l'intituler
@@ -35,9 +37,14 @@ public class Question {
         return this.intituler;
     }
 
+    public String getTheme() { // pour afficher l'intituler
+
+        return "";//this.theme;
+    }
+
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
 
-        if ((selection - 1) == indiceSolution) {
+        if ((selection - 1) == indiceSol) {
             return true;
         } else {
             return false;
@@ -48,7 +55,7 @@ public class Question {
 
         switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
             case 1: // facile
-
+                //recuperer ici la toutes les donnes de la question en fonction du theme
                 this.intituler = "facile"; // recuperer l'intituler de la bdd
                 this.diff = 1;
                 // charger les reponses
@@ -71,12 +78,19 @@ public class Question {
 
     @Override
     public String toString() {
-        if (diff < 1)
-            return "erreur question non initialisée";
 
-        else
-            return this.intituler + " ?\n1:" + mReponses[0] + " 2:" + mReponses[1] + " \n3:" + mReponses[2] + " 4:"
-                    + mReponses[3];
+        if (diff < 1) {
+            return "erreur question non initialisée";
+        } else {
+            String sortie = this.intituler +"\n";
+            String temp ="";
+            for (int i = 1; i < reponses.size()+1; i++) {
+                temp = reponses.get(i);
+                sortie += i + " : " + temp + "\n";
+            }
+            
+            return sortie;
+        }
     }
 
     public int getDiff() {
