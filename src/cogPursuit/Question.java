@@ -17,14 +17,14 @@ public class Question {
     Dictionary<Integer, String> reponses = new Hashtable<>();
     private String intituler = "";
     private int indiceSol = 0;
-    private String theme="";
+    private String theme = "";
 
     private int diff = 0; // difficulter
 
     public Question(String t) {
         theme = t;
         intituler = "c'est dur?";
-        //repartition du theme
+        // repartition du theme
         reponses.put(1, "Oui");
         reponses.put(2, "Non");
         reponses.put(3, "Non");
@@ -38,9 +38,9 @@ public class Question {
         return this.intituler;
     }
 
-    public String getTheme() { // pour afficher l'intituler
+    public String getTheme() { // pour afficher le theme
 
-        return "";//this.theme;
+        return "";// this.theme;
     }
 
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
@@ -53,11 +53,11 @@ public class Question {
         }
     }
 
-    public boolean getQestion(int entreeJ,String theme) { // entreeJ represente la difficultée choisis
+    public boolean getQestion(int entreeJ, String theme) { // entreeJ represente la difficultée choisis
 
         switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
             case 1: // facile
-                //recuperer ici la toutes les donnes de la question en fonction du theme
+                // recuperer ici la toutes les donnes de la question en fonction du theme
                 this.intituler = "facile"; // recuperer l'intituler de la bdd
                 this.diff = 1;
                 // charger les reponses
@@ -84,13 +84,13 @@ public class Question {
         if (diff < 1) {
             return "erreur question non initialisée";
         } else {
-            String sortie ="Theme : "+this.theme+"\n"+ this.intituler +"\n";
-            String temp ="";
-            for (int i = 1; i < reponses.size()+1; i++) {
+            String sortie = "Theme : " + this.theme + "\n" + this.intituler + "\n";
+            String temp = "";
+            for (int i = 1; i < reponses.size() + 1; i++) {
                 temp = reponses.get(i);
                 sortie += i + " : " + temp + "\n";
             }
-            
+
             return sortie;
         }
     }
