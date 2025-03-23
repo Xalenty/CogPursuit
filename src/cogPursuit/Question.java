@@ -13,7 +13,7 @@ public class Question {
     private String intituler = "";
     private String[] mReponses = new String[4];
     private int indiceSolution = -1;
-    private int diff = 0; // difficulter
+    private int diff = 0; // difficulté
 
     public Question() {
         mReponses[0] = "oui";
