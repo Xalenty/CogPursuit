@@ -85,13 +85,13 @@ public class ConnexionBdd {
             //Partie qui permet de charger la question voulue
             switch (diff) {
                 case 1:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'facile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'facile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
                     break;
                 case 2:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'moyenne' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'moyenne' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
                     break;
                 case 3:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'difficile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'difficile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
                     break;
                 default:
                     throw new AssertionError();
@@ -105,6 +105,7 @@ public class ConnexionBdd {
                 resultatsString.add(rs.getString("choix_B"));
                 resultatsString.add(rs.getString("choix_C"));
                 resultatsString.add(rs.getString("choix_D"));
+                resultatsString.add(rs.getString("q.reponse_correcte"));
                 resultatsString.add(rs.getString("theme"));
             }
 

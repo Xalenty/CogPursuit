@@ -15,6 +15,5 @@ public class Main {
         System.out.println(ddb.recuperationQuestion(1));
         CogPursuit jeu = new CogPursuit();
         jeu.start();
-        
     }
 }
