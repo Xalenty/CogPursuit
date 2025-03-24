@@ -4,6 +4,7 @@
  */
 package JavaPackage;
 
+import cogPursuit.CogPursuit;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class JeuController implements Initializable {
 
     @FXML
     private AnchorPane origine;
- 
+    private CogPursuit partie;
     private boolean charger = false;
     
     @FXML
@@ -32,7 +33,15 @@ public class JeuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         if (!charger) {
-            origine.setFocusTraversable(true);
+            Chargement();
+        } else {
+            return;
+        }
+
+    }
+    
+    private void Chargement(){
+        origine.setFocusTraversable(true);
             origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
                 if (nScene != null) {
                     scene = nScene;
@@ -43,11 +52,7 @@ public class JeuController implements Initializable {
                     System.out.println("Chargement...");
                 }
             });
-
-        } else {
-            return;
-        }
-
+    
     }
         
     private void touchePressee(KeyEvent event) {

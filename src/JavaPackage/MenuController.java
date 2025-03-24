@@ -26,7 +26,6 @@ import javafx.stage.Stage;
  */
 public class MenuController implements Initializable {
 
-    //private CogPursuit jeu;
     @FXML
     private Scene scene;
     @FXML
@@ -42,9 +41,6 @@ public class MenuController implements Initializable {
     @FXML
     private Button option;
 
-    //public MenuController(){
-    //CogPursuit jeu = new CogPursuit();
-    //}
     private void touchePressee(KeyEvent event) {
         if (KeyCode.ESCAPE == event.getCode()) {// Effectuer une action lorsque la touche "Échap" est pressée
 

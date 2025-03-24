@@ -15,17 +15,18 @@ public class CogPursuit implements Parametre {
 
     Terrain terrain;
     // liste des joueurs
-    ArrayList<Joueur> listeJ = new ArrayList<Joueur>();    
+    ArrayList<Joueur> listeJ = new ArrayList<Joueur>();
     ArrayList<Question> listeQ = new ArrayList<Question>();
-
 
     /**
      * @param args the command line arguments
      */
     public CogPursuit() {
         terrain = new Terrain();
-
         System.out.println("Bienvenue sur CogPursuit!");
+    }
+
+    public void start() { // demande et initialise le/s joueur/s
         Scanner scan = new Scanner(System.in);
 
         // faire boucler la demande si enteeJ incorrect
@@ -42,13 +43,26 @@ public class CogPursuit implements Parametre {
                 initialiser = true;
             }
         }
-    
     }
 
+    /*
+   public boolean setjoueur(int x){ // demande et initialise le/s  i joueur/s
+            // demande du nb joueur
+
+            if (x > maxJoueur || x < 1) {
+                System.out.println("Nombres de joueurs incorrect.");
+            return true;
+
+            } else {
+                initJoueurs(x);
+                return true;
+            }
+   }
+     */
     /**
      * @param args the command line arguments
      */
-    public void start() {
+    public void partie() {
         int cTour = 0;
         System.out.println(this.terrain);
 
@@ -93,22 +107,21 @@ public class CogPursuit implements Parametre {
     public void tour(Joueur j, Terrain t) {
         int entreeJ = 0;
         Scanner scan = new Scanner(System.in);
-        Case temp =t.getCase(j.getPos()) ; 
+        Case temp = t.getCase(j.getPos());
 
         Question q = new Question(temp.getTheme());
 
         // selection difficulté
         boolean selection = false;
-        
+
         while (!selection) {
             System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-                if (entreeJ > 3 || entreeJ < 1)
+                if (entreeJ > 3 || entreeJ < 1) {
                     System.out.println("degré de difficulté incorrecte.");
-                
-                else {
-                                        q.getQestion(entreeJ,temp.getTheme());
+                } else {
+                    q.getQestion(entreeJ, temp.getTheme());
                     listeQ.add(q);
                     selection = true;
                 }
@@ -130,7 +143,6 @@ public class CogPursuit implements Parametre {
 
                     j.addScore(q.getDiff());// mettre a jour le score
                     j.deplacement(q.getDiff(), t); // +1 si facile, +2 si normal, +3 si difficile
-                    
 
                     return;
 
