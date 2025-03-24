@@ -4,15 +4,20 @@
  */
 package JavaPackage;
 
+import java.awt.Button;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -30,6 +35,12 @@ public class MenuController implements Initializable {
     private VBox hub;
     @FXML
     private VBox modeJeu;
+    @FXML
+    private Button modeSolo;
+    @FXML
+    private Button modeMulti;
+    @FXML
+    private Button option;
 
     //public MenuController(){
     //CogPursuit jeu = new CogPursuit();
@@ -80,6 +91,22 @@ public class MenuController implements Initializable {
 
     @FXML
     private void solo() {
+        try {
+            // Charger le second FXML pour le jeu
+            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("Jeu.fxml"));
+            Parent gameRoot = gameLoader.load();
+
+            Scene gameScene = new Scene(gameRoot, 800, 600);
+
+            Stage stage = (Stage) origine.getScene().getWindow();
+
+            // Afficher la scène du jeu
+            stage.setScene(gameScene);
+            stage.setTitle("CogPursuit - Jeu");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -91,19 +118,19 @@ public class MenuController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private boolean loop = true;
+    private boolean charger = false;
 
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle rb) { //se lance au chargement de la page FXML
-        if (loop) {
+        if (!charger) {
             origine.setFocusTraversable(true);
             origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
                 if (nScene != null) {
                     scene = nScene;
                     scene.setOnKeyPressed(this::touchePressee);
                     origine.requestFocus(); //fait le focus une fois que la scène est définie
-                    loop = !loop;
+                    charger = !charger;
                 } else {
                     System.out.println("Chargement...");
                 }

@@ -15,12 +15,12 @@ import javafx.stage.Stage;
  * @author ztsuk
  */
 public class IGraphique extends Application {
-
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {// faire un thread ?
         try {
             Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
             primaryStage.setTitle("CogPursuit");
+            
             primaryStage.setScene(new Scene(root, 1200, 900));
             primaryStage.show();
 
