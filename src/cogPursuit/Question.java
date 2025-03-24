@@ -8,6 +8,7 @@ package cogPursuit;
  *
  * @author ztsuk
  */
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -18,19 +19,22 @@ public class Question {
     private String intituler = "";
     private int indiceSol = 0;
     private String theme = "";
-
     private int diff = 0; // difficulter
 
-    public Question(String t) {
-        theme = t;
-        intituler = "c'est dur?";
-        // repartition du theme
-        reponses.put(1, "Oui");
-        reponses.put(2, "Non");
-        reponses.put(3, "Non");
-        reponses.put(4, "Non");
-        indiceSol = 1;
-
+    public Question(int diffi, String theme) {
+        
+        ConnexionBdd con = new ConnexionBdd();
+        ArrayList<String> qDetails = con.recuperationQuestion(diffi, theme);
+        
+        diff = diffi;
+        theme = theme;
+        intituler = qDetails.get(1);
+        reponses.put(1, qDetails.get(2));
+        reponses.put(2, qDetails.get(3));
+        reponses.put(3, qDetails.get(4));
+        reponses.put(4, qDetails.get(5));
+        
+        indiceSol = convertisseurIndice(qDetails.get(6));
     }
 
     public String getIntituler() { // pour afficher l'intituler
@@ -76,6 +80,30 @@ public class Question {
                 return false; // si le degré de difficulté est incorrecte
         }
 
+    }
+    
+    
+    private int convertisseurIndice(String instring){
+        int inint = 0;
+        
+        switch (instring) {
+            case "A":
+                inint=1;
+                break;
+            case "B":
+                inint=2;
+                break;
+            case "C":
+                inint=3;
+                break;
+            case "D":
+                inint=4;
+                break;
+            default:
+                throw new AssertionError();
+        }
+        
+        return inint;
     }
 
     @Override

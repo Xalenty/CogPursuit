@@ -67,14 +67,14 @@ public class ConnexionBdd {
         }
     }
 
-    public void testBDD() {
-        this.openConnexion();
-        System.out.println("salut ça marche");
-        this.closeConnexion();
-        System.out.println("Salut c'est fermé");
-    }
-
-    public ArrayList<String> recuperationQuestion(int diff) {
+//    public void testBDD() {
+//        this.openConnexion();
+//        System.out.println("salut ça marche");
+//        this.closeConnexion();
+//        System.out.println("Salut c'est fermé");
+//    }
+    
+    public ArrayList<String> recuperationQuestion(int diff, String theme) {
 
         ArrayList<String> resultatsString = new ArrayList();
 
@@ -85,13 +85,13 @@ public class ConnexionBdd {
             //Partie qui permet de charger la question voulue
             switch (diff) {
                 case 1:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'facile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'facile' AND t.nom = '" + theme + "' ORDER BY RAND() LIMIT 1;";
                     break;
                 case 2:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'moyenne' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'moyenne' AND t.nom = '" + theme + "' ORDER BY RAND() LIMIT 1;";
                     break;
                 case 3:
-                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'difficile' AND t.nom = 'Neurosciences' ORDER BY RAND() LIMIT 1;";
+                    query = "SELECT q.id_question, q.texte AS enonce, q.choix_A, q.choix_B, q.choix_C, q.choix_D, q.reponse_correcte, t.nom AS theme FROM Question q JOIN Theme t ON q.id_theme = t.id_theme WHERE q.difficulte = 'difficile' AND t.nom = '" + theme + "' ORDER BY RAND() LIMIT 1;";
                     break;
                 default:
                     throw new AssertionError();
@@ -110,10 +110,10 @@ public class ConnexionBdd {
             }
 
             // test du retour de l'array list
-            for (int i = 0; i < resultatsString.size(); i++) {
-                System.out.println(resultatsString.get(i));
-            }
-            
+//            for (int i = 0; i < resultatsString.size(); i++) {
+//                System.out.println(resultatsString.get(i));
+//            }
+
             stmt.close();
         } catch (SQLException e) {
             System.out.println("Probleme avec la requete");

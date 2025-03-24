@@ -11,9 +11,10 @@ package cogPursuit;
 public class Main {
     public static void main(String[] args) {
         ConnexionBdd ddb = new ConnexionBdd();
-        ddb.testBDD();
-        System.out.println(ddb.recuperationQuestion(1));
+        //ddb.testBDD();
+        System.out.println(ddb.recuperationQuestion(1,"neurosciences"));
         CogPursuit jeu = new CogPursuit();
         jeu.start();
+        jeu.partie();
     }
 }

@@ -109,8 +109,6 @@ public class CogPursuit implements Parametre {
         Scanner scan = new Scanner(System.in);
         Case temp = t.getCase(j.getPos());
 
-        Question q = new Question(temp.getTheme());
-
         // selection difficulté
         boolean selection = false;
 
@@ -121,8 +119,6 @@ public class CogPursuit implements Parametre {
                 if (entreeJ > 3 || entreeJ < 1) {
                     System.out.println("degré de difficulté incorrecte.");
                 } else {
-                    q.getQestion(entreeJ, temp.getTheme());
-                    listeQ.add(q);
                     selection = true;
                 }
 
@@ -131,6 +127,9 @@ public class CogPursuit implements Parametre {
             }
         }
 
+        Question q = new Question(entreeJ, temp.getTheme()); //Création de la bonne question en fonction des paramètres
+        listeQ.add(q); //ajout de la Question à la liste des Q sorties
+        
         // selection reponse
         selection = false;
         while (!selection) {
@@ -140,10 +139,8 @@ public class CogPursuit implements Parametre {
                 entreeJ = scan.nextInt();
 
                 if (q.verification(entreeJ)) {
-
                     j.addScore(q.getDiff());// mettre a jour le score
                     j.deplacement(q.getDiff(), t); // +1 si facile, +2 si normal, +3 si difficile
-
                     return;
 
                 } else {
