@@ -97,17 +97,16 @@ public class CogPursuit implements Parametre {
         //selection difficulté
         boolean selection = false;
         while (!selection) {
-            System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
+            System.out.println("choisir une difficulté.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
                 if(entreeJ>3||entreeJ<1)System.out.println("degré de difficulté incorrecte.");
-                else{q.getQestion(entreeJ);
-
+                else{
+                q.choixQuestion(entreeJ);
                 selection = true;
                 }
-
             } else {
-                System.out.println("Type de difficultée incorrecte.");
+                System.out.println("Type de difficulté incorrecte.");
                 scan.next(); //pour éviter une boucle infinie
             }
         }

@@ -4,6 +4,8 @@
  */
 package cogPursuit;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ztsuk
@@ -16,12 +18,10 @@ public class Question {
     private int diff = 0; // difficulté
 
     public Question() {
-        mReponses[0] = "oui";
-        mReponses[1] = "non";
-        mReponses[2] = "non";
-        mReponses[3] = "non";
-
-        indiceSolution = 0;
+        mReponses[0] = "";
+        mReponses[1] = "";
+        mReponses[2] = "";
+        mReponses[3] = "";
     }
 
     public String getIntituler() { // pour afficher l'intituler 
@@ -38,13 +38,20 @@ public class Question {
         }
     }
 
-    public boolean getQestion(int entreeJ) { //entreeJ represente la difficultée choisis
-
-        switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
+    
+    public boolean choixQuestion(int entreeJ) { //entreeJ represente la difficulté choisie
+        
+        ConnexionBdd con = new ConnexionBdd();
+        
+        ArrayList<String> listQuestionChoisie = new ArrayList<>();
+        listQuestionChoisie = con.recuperationQuestion(entreeJ);
+        
+        switch (entreeJ) { // renvoie vrai apres avoir recuperé la question
             case 1: //facile
                 
-                this.intituler = "facile"; // recuperer l'intituler de la bdd
+                this.intituler = "facile"; // recuperer l'intitulé de la bdd
                 this.diff=1;
+                this.indiceSolution=1;
                 //charger les reponses 
                 return true;
             case 2: //normal
