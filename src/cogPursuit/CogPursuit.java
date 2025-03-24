@@ -46,18 +46,18 @@ public class CogPursuit implements Parametre {
     }
 
     /*
-   public boolean setjoueur(int x){ // demande et initialise le/s  i joueur/s
-            // demande du nb joueur
-
-            if (x > maxJoueur || x < 1) {
-                System.out.println("Nombres de joueurs incorrect.");
-            return true;
-
-            } else {
-                initJoueurs(x);
-                return true;
-            }
-   }
+     * public boolean setjoueur(int x){ // demande et initialise le/s i joueur/s
+     * // demande du nb joueur
+     * 
+     * if (x > maxJoueur || x < 1) {
+     * System.out.println("Nombres de joueurs incorrect.");
+     * return true;
+     * 
+     * } else {
+     * initJoueurs(x);
+     * return true;
+     * }
+     * }
      */
     /**
      * @param args the command line arguments
@@ -127,9 +127,9 @@ public class CogPursuit implements Parametre {
             }
         }
 
-        Question q = new Question(entreeJ, temp.getTheme()); //Création de la bonne question en fonction des paramètres
-        listeQ.add(q); //ajout de la Question à la liste des Q sorties
-        
+        Question q = new Question(entreeJ, temp.getTheme()); // Création de la bonne question en fonction des paramètres
+        listeQ.add(q); // ajout de la Question à la liste des Q sorties
+
         // selection reponse
         selection = false;
         while (!selection) {
@@ -153,6 +153,144 @@ public class CogPursuit implements Parametre {
                 System.out.println("Type de réponse incorrecte.");
                 scan.next(); // pour éviter une boucle infinie
             }
+        }
+
+    }
+
+    public boolean setjoueur(int x) { // demande et initialise le/s i joueur/s
+        // demande du nb joueur
+
+        if (x > maxJoueur || x < 1) {
+            System.out.println("Nombres de joueurs incorrect.");
+            return true;
+
+        } else {
+            initJoueurs(x);
+            return true;
+        }
+    }
+
+    public boolean initJoueurs(ArrayList<String> noms) {
+        if (noms.size() < maxJoueur && noms.size() > 0) {
+            for (int i = 0; i < noms.size(); i++) {
+
+                listeJ.add(new Joueur(noms.get(i), terrain));
+            }
+            for (int i = 0; i < noms.size(); i++) {// initialisera les joueurs sur la premiere Case du terrain
+                listeJ.get(i).deplacement(-1, terrain);
+            }
+            return true;
+        } else {
+            System.out.println("erreur liste Noms dans initJoueur");
+            return false;
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public void tour() {
+        int entreeJ = 0;
+        Scanner scan = new Scanner(System.in);
+        Case temp = terrain.getCase(listeJ.getFirst().getPos());
+
+        Question q = new Question(temp.getTheme());
+
+        // selection difficulté
+        boolean selection = false;
+
+        while (!selection) {
+            System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
+            if (scan.hasNextInt()) {
+                entreeJ = scan.nextInt();
+                if (entreeJ > 3 || entreeJ < 1) {
+                    System.out.println("degré de difficulté incorrecte.");
+                } else {
+                    q.getQestion(entreeJ, temp.getTheme());
+                    listeQ.add(q);
+                    selection = true;
+                }
+
+            } else {
+                System.out.println("Type de difficultée incorrecte.");
+            }
+        }
+
+        // selection reponse
+        selection = false;
+        while (!selection) {
+            System.out.println(q);
+
+            if (scan.hasNextInt()) {
+                entreeJ = scan.nextInt();
+
+                if (q.verification(entreeJ)) {
+
+                    listeJ.getFirst().addScore(q.getDiff());// mettre a jour le score
+                    listeJ.getFirst().deplacement(q.getDiff(), terrain); // +1 si facile, +2 si normal, +3 si difficile
+
+                    // change de joueur
+                    Joueur j = listeJ.getFirst();
+                    listeJ.removeFirst();
+                    listeJ.add(j);
+                    return;
+
+                } else {
+                    listeJ.getFirst().deplacement(1 - q.getDiff(), terrain);
+                    // change de joueur
+                    Joueur j = listeJ.getFirst();
+                    listeJ.removeFirst();
+                    listeJ.add(j);
+                    return;
+                }
+
+            } else {
+                System.out.println("Type de réponse incorrecte.");
+                scan.next(); // pour éviter une boucle infinie
+            }
+        }
+
+    }
+
+    public boolean tour(int entreeJ) {
+        Case temp = terrain.getCase(listeJ.getFirst().getPos());// case sur laquel le joeuur actuel est
+
+        Question q = new Question(temp.getTheme());
+
+        // System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n
+        // Difficile : 3\n");
+        if (entreeJ > 3 || entreeJ < 1) {
+            System.out.println("degré de difficulté incorrecte.");
+
+            return false;
+        } else {
+            q.getQestion(entreeJ, temp.getTheme());
+            listeQ.add(q);
+            return true;
+        }
+
+    }
+
+    public boolean propositionR(int entreeJ) {
+        // selection reponse
+        if (listeQ.getLast().verification(entreeJ)) {
+
+            listeJ.getFirst().addScore(listeQ.getLast().getDiff());// mettre a jour le score
+            listeJ.getFirst().deplacement(listeQ.getLast().getDiff(), terrain); // +1 si facile, +2 si normal, +3 si
+            // difficile
+            // change de joueur
+            Joueur j = listeJ.getFirst();
+            listeJ.removeFirst();
+            listeJ.add(j);
+            return true;
+
+        } else {
+            listeJ.getFirst().deplacement(1 - listeQ.getLast().getDiff(), terrain);
+            // change de joueur
+            Joueur j = listeJ.getFirst();
+            listeJ.removeFirst();
+            listeJ.add(j);
+            return true;
         }
 
     }
