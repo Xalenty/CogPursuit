@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cogPursuit;
-
+import java.util.ArrayList;
 /**
  *
  * @author ztsuk
@@ -11,34 +11,48 @@ package cogPursuit;
 public class Case {
    
     private int numCase = -1; // id de la case 
-    private int nbJoueur = 0; //nombre de joueur sur la case
-
-    public Case(int i) {
-        numCase = i;
+    private ArrayList<Joueur> listJ = new ArrayList<Joueur>();
+    private String theme="";
+    
+    public Case(int i, String t) {
+        this.numCase = i;
+        this.theme = t;
+    }
+     public String getTheme() { // permet de recuperer "l'id" de la case
+        return this.theme;
     }
 
     public int getNumCase() { // permet de recuperer "l'id" de la case
         return this.numCase;
     }
     
-    
-    public void addJoueur(){ // ajoute a joueur dans la case 
-        
-        this.nbJoueur +=1;
+    public void addJoueur(Joueur j){ // ajoute a joueur dans la case 
+        this.listJ.add(j);
     }
-    public void suppJoueur(){ // retire 1 joueur de la case si il y en a
-        if(this.nbJoueur >0) this.nbJoueur -=1;
+    public void suppJoueur(Joueur j){ // retire 1 joueur de la case si il y en a
+        this.listJ.remove(j);
+
     }
     
     @Override
     public String toString(){
-        
-        if (nbJoueur>0){ //si il y a des joueurs
+        if(numCase==0 && this.listJ.size()==0) return "[D]";
+        else if (this.listJ.size()>0 && numCase==0){ //si il y a des joueurs su la premiere case
+            
+            String res = "[D:";
+            
+            for(int i =0; i<this.listJ.size();i++){
+                res+=listJ.get(i) + ". ";
+            }
+            res +="]";
+            return res;
+        }
+        else if (this.listJ.size()>0){ //si il y a des joueurs sur une case
             
             String res = "[";
             
-            for(int i =0; i<nbJoueur;i++){
-                res+="X";
+            for(int i =0; i<this.listJ.size();i++){
+                res+=listJ.get(i) + ". ";
             }
             res +="]";
             return res;

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane fx:id="origine" xmlns="http://javafx.com/javafx/23.0.1" 
+           xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="JavaPackage.MenuController" 
+           prefWidth="1200" prefHeight="900"
+           minWidth="400.0" minHeight="300.0"
+           maxWidth="1200" maxHeight="1200" >
+   <children>
+      <VBox fx:id="hub" alignment="CENTER" 
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
+            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" 
+            spacing="10.0" >
+         
+          <children>
+            <Button onAction="#btnPlay" text="Jouer" />
+            <Button onAction="#btnOption" text="Options" />
+            <Button onAction="#btnScores" text="Scores" />
+            <Button onAction="#btnQuitter" text="Quitter" />
+         </children>
+      </VBox>
+      
+            <VBox fx:id="modeJeu" alignment="CENTER" 
+                  disable="true" visible="false"  
+                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" 
+                  spacing="10.0" >
+         <children>
+            <GridPane alignment="CENTER" hgap="10" vgap="10">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" onAction="#solo" text="solo" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" onAction="#multi" text="Multijoueur" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
