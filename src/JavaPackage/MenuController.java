@@ -76,9 +76,25 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void btnScores() {
+    private void btnClassement() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Classement.fxml"));
+            Parent root = loader.load();
 
+            Scene classementScene = new Scene(root, 1200, 900);
+
+            classementScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+            Stage stage = (Stage) origine.getScene().getWindow();
+            stage.setScene(classementScene);
+            stage.setTitle("Classement des joueurs");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     @FXML
     private void btnQuitter() {

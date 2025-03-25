@@ -19,6 +19,8 @@ public class IGraphique extends Application {
     public void start(Stage primaryStage) throws IOException {// faire un thread ?
         try {
             Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+            root.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
             primaryStage.setTitle("CogPursuit");
             
             primaryStage.setScene(new Scene(root, 1200, 900));

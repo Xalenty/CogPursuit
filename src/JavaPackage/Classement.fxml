@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="origine"
+            fx:controller="JavaPackage.ClassementController"
+            prefWidth="1200" prefHeight="900"
+            style="-fx-padding: 40;"
+            styleClass="root">
+
+    <children>
+        <Text text="Classement des joueurs"
+              style="-fx-font-size: 36px; -fx-fill: #4a90e2;"
+              layoutX="350" layoutY="60" />
+
+        <ListView fx:id="listeScores"
+                  layoutX="300" layoutY="100"
+                  prefWidth="600" prefHeight="600"/>
+
+        <Button text="Retour au menu"
+                layoutX="500" layoutY="750"
+                onAction="#retourMenu"
+                prefWidth="200"/>
+    </children>
+</AnchorPane>
