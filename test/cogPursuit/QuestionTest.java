@@ -29,17 +29,25 @@ public class QuestionTest {
 
     @Test
     public void testVerificationBonneReponse() {
-        // Vérifie que la méthode de vérification fonctionne avec une bonne réponse.
-        boolean result = questionFacile.verification(1);  // Choisir la bonne réponse
+        int bonneReponse = questionFacile.getIndiceSol();  // utilise la vraie bonne réponse
+        boolean result = questionFacile.verification(bonneReponse);
         assertTrue(result, "La réponse devrait être correcte.");
     }
 
+
     @Test
     public void testVerificationMauvaiseReponse() {
-        // Vérifie que la méthode de vérification fonctionne avec une mauvaise réponse.
-        boolean result = questionFacile.verification(2);  // Choisir une mauvaise réponse
+        int bonneReponse = questionFacile.getIndiceSol();
+        int mauvaiseReponse = (bonneReponse % 4) + 1;  // ex : si 1, devient 2 (toujours différent)
+
+        if (mauvaiseReponse == bonneReponse) {
+            mauvaiseReponse = (mauvaiseReponse % 4) + 1;  // pour forcer la différence
+        }
+
+        boolean result = questionFacile.verification(mauvaiseReponse);
         assertFalse(result, "La réponse devrait être incorrecte.");
     }
+
 
     @Test
     public void testGetDiff() {

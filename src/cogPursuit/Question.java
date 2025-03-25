@@ -41,6 +41,11 @@ public class Question {
         return this.intituler;
     }
 
+    public int getIndiceSol() {
+        return this.indiceSol;
+    }
+    
+
     public String getTheme() { // pour afficher le theme
 
         return this.theme;
