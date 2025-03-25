@@ -7,12 +7,14 @@ package JavaPackage;
 import java.awt.Button;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -103,24 +105,36 @@ public class MenuController implements Initializable {
 
     @FXML
     private void solo() {
-        try {
-            // Charger le second FXML pour le jeu
-            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("Jeu.fxml"));
-            Parent gameRoot = gameLoader.load();
-
-            Scene gameScene = new Scene(gameRoot, 800, 600);
-
-            Stage stage = (Stage) origine.getScene().getWindow();
-
-            // Afficher la scène du jeu
-            stage.setScene(gameScene);
-            stage.setTitle("CogPursuit - Jeu");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Nom du joueur");
+        dialog.setHeaderText("Entrez votre nom pour commencer la partie solo :");
+        dialog.setContentText("Nom :");
+    
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(pseudo -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Jeu.fxml"));
+                Parent root = loader.load();
+    
+                // ⚠️ On récupère le controller AVANT de créer la scène
+                JeuController controller = loader.getController();
+                controller.lancerPartieSolo(pseudo);
+    
+                Scene scene = new Scene(root, 1200, 900);
+                scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+    
+                Stage stage = (Stage) origine.getScene().getWindow();
+                stage.setScene(scene);
+                stage.setTitle("CogPursuit - Jeu");
+                stage.show();
+    
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
+    
+
 
     @FXML
     private void multi() {

@@ -18,6 +18,15 @@ public class CogPursuit implements Parametre {
     ArrayList<Joueur> listeJ = new ArrayList<Joueur>();
     ArrayList<Question> listeQ = new ArrayList<Question>();
 
+    public Terrain getTerrain() {
+        return this.terrain;
+    }
+    
+    public ArrayList<Joueur> getListeJoueurs() {
+        return this.listeJ;
+    }
+    
+
     /**
      * @param args the command line arguments
      */
@@ -25,6 +34,19 @@ public class CogPursuit implements Parametre {
         terrain = new Terrain();
         System.out.println("Bienvenue sur CogPursuit!");
     }
+
+    public CogPursuit(String pseudo) {
+        this.terrain = new Terrain();
+        this.listeJ = new ArrayList<>();
+        this.listeQ = new ArrayList<>();
+    
+        Joueur joueur = new Joueur(pseudo, terrain);
+        joueur.deplacement(-1, terrain);
+        this.listeJ.add(joueur);
+    
+        System.out.println("Bienvenue " + pseudo + " sur CogPursuit !");
+    }
+    
 
     public void start() { // demande et initialise le/s joueur/s
         Scanner scan = new Scanner(System.in);

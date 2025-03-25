@@ -39,6 +39,10 @@ public class Joueur implements Parametre {
         return this.score;
     }
 
+    public String getPseudo() {
+        return this.pseudo;
+    }
+
     // position__
     public void setPos(Case c) {
 

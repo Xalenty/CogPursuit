@@ -55,6 +55,66 @@ public class ConnexionBdd {
         }
     }
 
+    public int creerPartieSolo(String pseudo) {
+        this.openConnexion();
+        int idJoueur = -1;
+        int idPartie = -1;
+    
+        try {
+            // 1. Vérifier si le joueur existe
+            PreparedStatement checkStmt = this.con.prepareStatement(
+                "SELECT id_joueur FROM Joueur WHERE nom = ?"
+            );
+            checkStmt.setString(1, pseudo);
+            ResultSet checkRs = checkStmt.executeQuery();
+    
+            if (checkRs.next()) {
+                // Joueur existe déjà
+                idJoueur = checkRs.getInt("id_joueur");
+            } else {
+                // Joueur n'existe pas, on l'insère
+                PreparedStatement insertStmt = this.con.prepareStatement(
+                    "INSERT INTO Joueur (nom) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                insertStmt.setString(1, pseudo);
+                insertStmt.executeUpdate();
+                ResultSet rs1 = insertStmt.getGeneratedKeys();
+                if (rs1.next()) {
+                    idJoueur = rs1.getInt(1);
+                }
+                insertStmt.close();
+            }
+    
+            // 2. Créer la partie
+            PreparedStatement stmt2 = this.con.prepareStatement(
+                "INSERT INTO Partie (nom, date_creation, statut) VALUES (?, NOW(), 'en cours')",
+                Statement.RETURN_GENERATED_KEYS);
+            stmt2.setString(1, "Partie de " + pseudo);
+            stmt2.executeUpdate();
+            ResultSet rs2 = stmt2.getGeneratedKeys();
+            if (rs2.next()) {
+                idPartie = rs2.getInt(1);
+            }
+    
+            // 3. Lier le joueur à la partie
+            PreparedStatement stmt3 = this.con.prepareStatement(
+                "INSERT INTO Joueur_Partie (id_joueur, id_partie, score, position) VALUES (?, ?, ?, ?)");
+            stmt3.setInt(1, idJoueur);
+            stmt3.setInt(2, idPartie);
+            stmt3.setInt(3, 0); // score initial
+            stmt3.setInt(4, 0); // position initiale
+            stmt3.executeUpdate();
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeConnexion();
+        }
+    
+        return idPartie;
+    }
+    
+    
+
     /*
      * Ferme la connexion avec la base de données
      */
