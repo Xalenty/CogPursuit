@@ -5,6 +5,8 @@
 package cogPursuit;
 
 /**
+ * Représente un joueur dans le jeu CogPursuit.
+ * Chaque joueur possède un pseudo, un score et une position sur le terrain.
  *
  * @author ztsuk
  */
@@ -14,42 +16,85 @@ public class Joueur implements Parametre {
     private int score = 0;
     private Case pos; // permet de connaitre sur quel case le joueur est
 
+    /**
+     * Constructeur de la classe Joueur.
+     * Initialise un joueur avec un pseudo et le place à la case de départ.
+     * 
+     * @param p Le pseudo du joueur.
+     * @param t Le terrain sur lequel il évolue.
+     */
     public Joueur(String p, Terrain t) {
         this.pseudo = p;
         this.pos = t.getCase(0); // origine de la carte
     }
 
-
+    /**
+     * Constructeur alternatif de la classe Joueur.
+     * Initialise un joueur avec un pseudo et un score défini.
+     * 
+     * @param p Le pseudo du joueur.
+     * @param score Le score initial du joueur.
+     */
     public Joueur(String p, int score) {
         this.pseudo = p;
         this.score = score; // origine de la carte
     }
 
+    /**
+     * Retourne le pseudo du joueur.
+     * 
+     * @return Le pseudo du joueur.
+     */
     @Override
     public String toString() {
         return this.pseudo;
     }
 
     // score__
+
+    /**
+     * Ajoute des points au score du joueur.
+     * 
+     * @param n Nombre de points à ajouter.
+     */
     public void addScore(int n) {
         this.score += n;
     }
 
+    /**
+     * Retourne le score actuel du joueur.
+     * 
+     * @return Le score du joueur.
+     */
     public int getScore() {
         return this.score;
     }
 
     // position__
-    public void setPos(Case c) {
 
+    /**
+     * Modifie la position actuelle du joueur.
+     * 
+     * @param c La nouvelle case où se trouve le joueur.
+     */
+    public void setPos(Case c) {
         this.pos = c;
     }
 
+    /**
+     * Retourne la position actuelle du joueur sur le terrain.
+     * 
+     * @return L'indice de la case où se trouve le joueur.
+     */
     public int getPos() {
-
         return this.pos.getNumCase();
     }
 
+    /**
+     * Vérifie si le joueur a atteint la fin du plateau.
+     * 
+     * @return true si le joueur est sur la dernière case, sinon false.
+     */
     public boolean fin() {
         if (pos.getNumCase() + 1 == tailleMap)
             return true;
@@ -58,9 +103,10 @@ public class Joueur implements Parametre {
     }
 
     /**
-     * Ajoute un score en fonction de la difficulté de la question
-     * @param bonneReponse 
-     * @param difficulte
+     * Ajoute des points au joueur en fonction de la difficulté de la question.
+     * 
+     * @param bonneReponse Indique si la réponse est correcte (true) ou incorrecte (false).
+     * @param difficulte Niveau de difficulté de la question (1 = Facile, 2 = Moyenne, 3 = Difficile).
      */
     public void ajouterScoreSelonDifficulte(boolean bonneReponse, int difficulte) {
         if (!bonneReponse) return; // Pas de points si mauvaise réponse
@@ -79,11 +125,19 @@ public class Joueur implements Parametre {
                 System.out.println("Difficulté inconnue, aucun score ajouté.");
         }
     }
-    
 
     // deplacement__
-    public void deplacement(int direction, Terrain t) {// direction correspond au resultat de la question {1 ,2 ,3, 0
-                                                       // ,-1 , -1}
+
+    /**
+     * Déplace le joueur sur le terrain en fonction du résultat d'une question.
+     * La direction dépend du score obtenu suite à la réponse :
+     * - 1, 2 ou 3 cases en avant si la réponse est correcte.
+     * - 0, -1 ou -2 cases en arrière si la réponse est incorrecte.
+     * 
+     * @param direction Le nombre de cases à avancer ou reculer.
+     * @param t Le terrain sur lequel le joueur évolue.
+     */
+    public void deplacement(int direction, Terrain t) {
 
         int nextPos = this.pos.getNumCase() + direction; // donne l'indice de la prochaine case
 

@@ -8,36 +8,49 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
+ * Classe principale du jeu CogPursuit.
+ * Gère l'initialisation du jeu, la gestion des joueurs et des tours.
+ * Implémente l'interface Parametre.
+ * 
+ * Le jeu consiste à répondre à des questions de différentes difficultés
+ * pour avancer sur un plateau. Le premier joueur à atteindre la fin gagne.
+ * 
  * @author Utilisateur
  */
 public class CogPursuit implements Parametre {
 
+    /** Terrain de jeu. */
     Terrain terrain;
-    // liste des joueurs
+    
+    /** Liste des joueurs participant au jeu. */
     ArrayList<Joueur> listeJ = new ArrayList<Joueur>();
+    
+    /** Liste des questions posées pendant la partie. */
     ArrayList<Question> listeQ = new ArrayList<Question>();
 
     /**
-     * @param args the command line arguments
+     * Constructeur de la classe CogPursuit.
+     * Initialise le terrain et affiche un message de bienvenue.
      */
     public CogPursuit() {
         terrain = new Terrain();
         System.out.println("Bienvenue sur CogPursuit!");
     }
 
-    public void start() { // demande et initialise le/s joueur/s
+    /**
+     * Démarre la configuration du jeu en demandant le nombre de joueurs
+     * et en les initialisant.
+     */
+    public void start() {
         Scanner scan = new Scanner(System.in);
-
-        // faire boucler la demande si enteeJ incorrect
         boolean initialiser = false;
+        
         while (!initialiser) {
-            // demande du nb joueur
             System.out.println("Entrez le nombre de joueurs (4 Max):");
             int entreeJ = scan.nextInt();
-
+            
             if (entreeJ > maxJoueur || entreeJ < 1) {
-                System.out.println("Nombres de joueurs incorrect.");
+                System.out.println("Nombre de joueurs incorrect.");
             } else {
                 initJoueurs(entreeJ);
                 initialiser = true;
@@ -45,7 +58,7 @@ public class CogPursuit implements Parametre {
         }
     }
 
-    /*
+   /*
    public boolean setjoueur(int x){ // demande et initialise le/s  i joueur/s
             // demande du nb joueur
 
@@ -59,20 +72,19 @@ public class CogPursuit implements Parametre {
             }
    }
      */
+
     /**
-     * @param args the command line arguments
+     * Gère le déroulement d'une partie jusqu'à la victoire d'un joueur.
      */
     public void partie() {
         int cTour = 0;
         System.out.println(this.terrain);
-
         System.out.println("Le jeu commence !");
 
         boolean fin = false;
         while (!fin) {
             cTour++;
             for (int i = 0; i < this.listeJ.size(); i++) {
-
                 System.out.println(this.listeJ.get(i) + " à toi de jouer!" + "\nTour : " + cTour);
                 tour(this.listeJ.get(i), terrain);
                 System.out.println(terrain);
@@ -86,74 +98,72 @@ public class CogPursuit implements Parametre {
     }
 
     /**
-     * @param args the command line arguments
+     * Initialise les joueurs en demandant leurs noms et les place sur le terrain.
+     * 
+     * @param nbJoueur Nombre de joueurs à initialiser
      */
     private void initJoueurs(int nbJoueur) {
         Scanner scan = new Scanner(System.in);
         for (int i = 0; i < nbJoueur; i++) {
-            System.out.println("Entrez le nom du joueurs num " + (i + 1) + " : ");
+            System.out.println("Entrez le nom du joueur num " + (i + 1) + " : ");
             String nom = scan.next();
-
             listeJ.add(new Joueur(nom, terrain));
         }
-        for (int i = 0; i < nbJoueur; i++) {// initialisera les joueurs sur la premiere Case du terrain
+        for (int i = 0; i < nbJoueur; i++) {
             listeJ.get(i).deplacement(-1, terrain);
         }
     }
 
     /**
-     * @param args the command line arguments
+     * Gère le tour d'un joueur en lui posant une question et en mettant à jour son état.
+     * 
+     * @param j Joueur en train de jouer
+     * @param t Terrain sur lequel le joueur évolue
      */
     public void tour(Joueur j, Terrain t) {
         int entreeJ = 0;
         Scanner scan = new Scanner(System.in);
         Case temp = t.getCase(j.getPos());
 
-        // selection difficulté
+        // Sélection de la difficulté de la question
         boolean selection = false;
-
         while (!selection) {
-            System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
+            System.out.println("Choisir une difficulté.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
                 if (entreeJ > 3 || entreeJ < 1) {
-                    System.out.println("degré de difficulté incorrecte.");
+                    System.out.println("Degré de difficulté incorrect.");
                 } else {
                     selection = true;
                 }
-
             } else {
-                System.out.println("Type de difficultée incorrecte.");
+                System.out.println("Type de difficulté incorrect.");
+                scan.next(); // Pour éviter une boucle infinie
             }
         }
 
-        Question q = new Question(entreeJ, temp.getTheme()); //Création de la bonne question en fonction des paramètres
-        listeQ.add(q); //ajout de la Question à la liste des Q sorties
+        // Création de la question et ajout à la liste des questions posées
+        Question q = new Question(entreeJ, temp.getTheme());
+        listeQ.add(q);
         
-        // selection reponse
+        // Sélection de la réponse
         selection = false;
         while (!selection) {
             System.out.println(q);
-
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-
                 if (q.verification(entreeJ)) {
-                    j.addScore(q.getDiff());// mettre a jour le score
-                    j.deplacement(q.getDiff(), t); // +1 si facile, +2 si normal, +3 si difficile
+                    j.addScore(q.getDiff());
+                    j.deplacement(q.getDiff(), t);
                     return;
-
                 } else {
                     j.deplacement(1 - q.getDiff(), t);
-
                     return;
                 }
-
             } else {
                 System.out.println("Type de réponse incorrecte.");
-                scan.next(); // pour éviter une boucle infinie
+                scan.next(); // Pour éviter une boucle infinie
             }
         }
-
     }
 }

@@ -4,22 +4,33 @@
  */
 package cogPursuit;
 
-/**
- *
- * @author ztsuk
- */
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+/**
+ * Représente une question du jeu avec son intitulé, ses réponses et son niveau de difficulté.
+ * Une question appartient à un thème spécifique et a une réponse correcte.
+ * 
+ * Les données des questions sont récupérées depuis une base de données via ConnexionBdd.
+ * 
+ * @author ztsuk
+ */
 public class Question {
 
     Dictionary<Integer, String> reponses = new Hashtable<>();
     private String intituler = "";
     private int indiceSol = 0;
     private String theme = "";
-    private int diff = 0; // difficulter
+    private int diff = 0; // difficulté de la question
 
+    /**
+     * Constructeur de la classe Question.
+     * Récupère une question depuis la base de données en fonction du thème et du niveau de difficulté.
+     * 
+     * @param diffi Niveau de difficulté de la question (1 = Facile, 2 = Moyenne, 3 = Difficile).
+     * @param theme Thème de la question.
+     */
     public Question(int diffi, String theme) {
         
         ConnexionBdd con = new ConnexionBdd();
@@ -36,22 +47,40 @@ public class Question {
         indiceSol = convertisseurIndice(qDetails.get(6));
     }
 
-    public String getIntituler() { // pour afficher l'intituler
-
+    /**
+     * Retourne l'intitulé de la question.
+     * 
+     * @return L'intitulé de la question.
+     */
+    public String getIntituler() {
         return this.intituler;
     }
 
+    /**
+     * Retourne l'indice de la réponse correcte.
+     * 
+     * @return L'indice de la réponse correcte (1 à 4).
+     */
     public int getIndiceSol() {
         return this.indiceSol;
     }
-    
 
-    public String getTheme() { // pour afficher le theme
-
+    /**
+     * Retourne le thème de la question.
+     * 
+     * @return Le thème de la question.
+     */
+    public String getTheme() {
         return this.theme;
     }
 
-    public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
+    /**
+     * Vérifie si la réponse donnée par le joueur est correcte.
+     * 
+     * @param selection L'indice de la réponse sélectionnée par le joueur.
+     * @return true si la réponse est correcte, false sinon.
+     */
+    public boolean verification(int selection) {
         if (selection == indiceSol) {
             System.out.println("Bonne Réponse!\n__\n");
             return true;
@@ -60,47 +89,54 @@ public class Question {
         return false;
     }
 
-    public boolean getQuestion(int entreeJ, String theme) { // entreeJ represente la difficultée choisis
+    /**
+     * Initialise une question en fonction de la difficulté choisie.
+     * 
+     * @param entreeJ Niveau de difficulté choisi (1 = Facile, 2 = Moyenne, 3 = Difficile).
+     * @param theme Thème de la question.
+     * @return true si la question est correctement initialisée, false sinon.
+     */
+    public boolean getQuestion(int entreeJ, String theme) {
 
-        switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
-            case 1: // facile
-                // recuperer ici la toutes les donnes de la question en fonction du theme
-                this.intituler = "facile"; // recuperer l'intituler de la bdd
+        switch (entreeJ) {
+            case 1: // Facile
+                this.intituler = "facile"; 
                 this.diff = 1;
-                // charger les reponses
                 return true;
-            case 2: // normal
+            case 2: // Moyenne
                 this.intituler = "normal";
                 this.diff = 2;
-
                 return true;
-            case 3: // difficile
+            case 3: // Difficile
                 this.intituler = "difficile";
                 this.diff = 3;
-
                 return true;
             default:
-                return false; // si le degré de difficulté est incorrecte
+                return false; // Si le degré de difficulté est incorrect
         }
-
     }
-    
-    
-    private int convertisseurIndice(String instring){
+
+    /**
+     * Convertit une réponse sous forme de lettre (A, B, C, D) en un indice numérique (1, 2, 3, 4).
+     * 
+     * @param instring Lettre correspondant à la réponse correcte.
+     * @return L'indice numérique de la réponse correcte.
+     */
+    private int convertisseurIndice(String instring) {
         int inint = 0;
         
         switch (instring) {
             case "A":
-                inint=1;
+                inint = 1;
                 break;
             case "B":
-                inint=2;
+                inint = 2;
                 break;
             case "C":
-                inint=3;
+                inint = 3;
                 break;
             case "D":
-                inint=4;
+                inint = 4;
                 break;
             default:
                 throw new AssertionError();
@@ -109,6 +145,12 @@ public class Question {
         return inint;
     }
 
+    /**
+     * Retourne le nom correspondant à un niveau de difficulté.
+     * 
+     * @param d Niveau de difficulté (1, 2 ou 3).
+     * @return Le nom de la difficulté sous forme de texte.
+     */
     private String getNomDifficulte(int d) {
         return switch (d) {
             case 1 -> "Facile";
@@ -117,8 +159,12 @@ public class Question {
             default -> "Inconnue";
         };
     }
-    
 
+    /**
+     * Retourne une représentation textuelle de la question, incluant son thème, sa difficulté et les réponses possibles.
+     * 
+     * @return Une chaîne de caractères décrivant la question et ses réponses.
+     */
     @Override
     public String toString() {
 
@@ -138,8 +184,11 @@ public class Question {
         }
     }
 
-    
-
+    /**
+     * Retourne le niveau de difficulté de la question.
+     * 
+     * @return Le niveau de difficulté de la question.
+     */
     public int getDiff() {
         return this.diff;
     }
