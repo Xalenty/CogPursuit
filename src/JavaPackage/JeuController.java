@@ -64,7 +64,7 @@ public class JeuController implements Initializable, Parametre {
                 }
             }
         }
-        Platform.runLater(() -> affichage.layout());
+        Platform.runLater(() -> affichage.layout());//force la maj de l'affichage
     }
     private void Chargement() {
         origine.setFocusTraversable(true);
