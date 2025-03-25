@@ -50,12 +50,18 @@ public class JeuController implements Initializable {
     @FXML private Label labelFeedback;
     @FXML private HBox boxDifficulte;
     @FXML private HBox boxFinPartie;
+    @FXML private Button boutonRetour;
+
 
     private int numeroTour = 1;
     private cogPursuit.Question questionActuelle;
     private cogPursuit.Joueur joueurActuel;
     private int idPartieActuelle;
     private int idJoueur;
+    private record EtatJoueur(int score, int position) {}
+    private EtatJoueur dernierEtat;
+    private int nbRetoursRestants = 3;
+
 
 
 
@@ -82,6 +88,8 @@ public class JeuController implements Initializable {
             }
         });
     }
+
+    
 
     private void demarrerTour() {
         joueurActuel = partie.getListeJoueurs().get(0);
@@ -122,6 +130,8 @@ public class JeuController implements Initializable {
     
 
     private void verifierReponse(int selection) {
+        dernierEtat = new EtatJoueur(joueurActuel.getScore(), joueurActuel.getPos());
+
         boolean bonne = questionActuelle.verification(selection);
         joueurActuel.ajouterScoreSelonDifficulte(bonne, questionActuelle.getDiff());
     
@@ -186,11 +196,37 @@ public class JeuController implements Initializable {
         });
         pause.play();
     }
+
+    @FXML
+    private void retourAction() {
+        if (nbRetoursRestants > 0 && dernierEtat != null) {
+            joueurActuel.setScore(dernierEtat.score());
+            joueurActuel.setPos(dernierEtat.position(), partie.getTerrain());
+
+            nbRetoursRestants--;
+
+            afficherPlateauGraphique();
+            labelFeedback.setText("↩️ Retour effectué (" + nbRetoursRestants + " restants)");
+
+            if (nbRetoursRestants == 0) {
+                boutonRetour.setDisable(true);
+            }
+
+        } else {
+            labelFeedback.setText("🚫 Plus de retours possibles !");
+            boutonRetour.setDisable(true); // Sécurité au cas où
+        }
+    }
+
+
     
 
     @FXML
     private void rejouerPartie() {
         // Réinitialise la partie
+        nbRetoursRestants = 3;
+        boutonRetour.setDisable(false);
+
         String pseudo = joueurActuel.getPseudo();
         this.partie = new CogPursuit(pseudo);
         this.joueurActuel = this.partie.getListeJoueurs().get(0);
@@ -318,6 +354,9 @@ public class JeuController implements Initializable {
      */
     public void lancerPartieSolo(String pseudo) {
         ConnexionBdd bdd = new ConnexionBdd();
+        nbRetoursRestants = 3;
+        boutonRetour.setDisable(false);
+
         int idPartie = bdd.creerPartieSolo(pseudo);
         this.idPartieActuelle = idPartie;
         this.idJoueur = bdd.getIdJoueur(pseudo);
@@ -360,7 +399,6 @@ public class JeuController implements Initializable {
     
         System.out.println("✅ Partie rechargée depuis la base avec le joueur " + joueurSauvegarde.getPseudo());
     }
-    
     
     
     

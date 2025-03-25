@@ -68,6 +68,9 @@
             <!-- Feedback -->
             <Label fx:id="labelFeedback" style="-fx-font-size: 18px;" />
 
+            <Button fx:id="boutonRetour" text="Revenir en arrière" onAction="#retourAction" style="-fx-font-size: 18px;" />
+
+
         </VBox>
 
         <!-- Classement des joueurs -->
