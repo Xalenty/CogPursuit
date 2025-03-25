@@ -64,7 +64,7 @@ public class JeuController implements Initializable, Parametre {
                     Label joueurs = new Label(compteur+1+"");//permettra de mettre les noms des joueurs sur une case
                     joueurs.setStyle("-fx-font-size: 18px; -fx-text-fill: black;");
                     caseJeu.setPrefSize(100, 100);
-                    caseJeu.setStyle("-fx-border-color: black; -fx-background-color: gray;");//peux changer en fonction theme
+                    caseJeu.setStyle("-fx-border-color: black; -fx-background-color: lightblue;");//peux changer en fonction theme
                     caseJeu.setOpacity(1.0);
 
                     caseJeu.getChildren().add(joueurs);
