@@ -44,6 +44,7 @@ public class Question {
     public String getTheme() { // pour afficher le theme
 
         return this.theme;
+        return this.theme;
     }
 
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
@@ -140,3 +141,4 @@ public class Question {
     }
 
 }
+
