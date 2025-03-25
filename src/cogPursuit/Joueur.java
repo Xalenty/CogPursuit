@@ -43,6 +43,14 @@ public class Joueur implements Parametre {
         return this.pseudo;
     }
 
+    public void setScore (int score) {
+        this.score = score;
+    }
+
+    public void setPos(int index, Terrain t) {
+        this.pos = t.getCase(index);
+    }
+
     // position__
     public void setPos(Case c) {
 

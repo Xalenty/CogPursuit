@@ -239,6 +239,104 @@ public class ConnexionBdd {
         }
     }
 
+    public void sauvegarderEtatPartie(int idPartie, int idJoueur, int score, int position) {
+        openConnexion();
+        try {
+            PreparedStatement stmt = con.prepareStatement("""
+                UPDATE Joueur_Partie SET score = ?, position = ?
+                WHERE id_joueur = ? AND id_partie = ?
+            """);
+            stmt.setInt(1, score);
+            stmt.setInt(2, position);
+            stmt.setInt(3, idJoueur);
+            stmt.setInt(4, idPartie);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnexion();
+        }
+    }   
+    
+    public int getIdJoueur(String pseudo) {
+        openConnexion();
+        int id = -1;
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT id_joueur FROM Joueur WHERE nom = ?");
+            stmt.setString(1, pseudo);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id_joueur");
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnexion();
+        }
+        return id;
+    }
+    
+
+    public Joueur chargerJoueur(int idPartie) {
+        openConnexion();
+        Joueur joueur = null;
+        try {
+            PreparedStatement stmt = con.prepareStatement("""
+                SELECT j.nom, jp.score, jp.position
+                FROM Joueur_Partie jp
+                JOIN Joueur j ON jp.id_joueur = j.id_joueur
+                WHERE jp.id_partie = ?
+            """);
+            stmt.setInt(1, idPartie);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String pseudo = rs.getString("nom");
+                int score = rs.getInt("score");
+                int position = rs.getInt("position");
+    
+                Terrain t = new Terrain();
+                joueur = new Joueur(pseudo, t);
+                joueur.setScore(score);
+                joueur.setPos(position, t);
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnexion();
+        }
+        return joueur;
+    } 
+
+    public int getDernierePartieId(String pseudo) {
+        openConnexion();
+        int idPartie = -1;
+        try {
+            PreparedStatement stmt = con.prepareStatement("""
+                SELECT p.id_partie
+                FROM Partie p
+                JOIN Joueur_Partie jp ON p.id_partie = jp.id_partie
+                JOIN Joueur j ON jp.id_joueur = j.id_joueur
+                WHERE j.nom = ? AND p.statut = 'en cours'
+                ORDER BY p.date_creation DESC
+                LIMIT 1
+            """);
+            stmt.setString(1, pseudo);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                idPartie = rs.getInt("id_partie");
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnexion();
+        }
+        return idPartie;
+    }    
+
     public void mettreAJourScore(int idPartie, String pseudo, int score, int position) {
         this.openConnexion();
         try {

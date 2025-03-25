@@ -48,11 +48,13 @@
                         <Button text="Jouer" onAction="#btnPlay" prefWidth="200"
                                 GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                         <Button text="Options" onAction="#btnOption" prefWidth="200"
-                                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                         <Button text="Classement" onAction="#btnClassement" prefWidth="200"
                                 GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                         <Button text="Quitter" onAction="#btnQuitter" prefWidth="200"
                                 GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Button text="Reprendre" onAction="#btnReprendre" prefWidth="200"
+                                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                     </children>
                 </GridPane>
             </children>

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import cogPursuit.ConnexionBdd;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -133,7 +135,42 @@ public class MenuController implements Initializable {
             }
         });
     }
-    
+
+    @FXML
+    private void btnReprendre() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Reprendre la partie");
+        dialog.setHeaderText("Entrez votre pseudo pour charger la partie en cours :");
+        dialog.setContentText("Nom :");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(pseudo -> {
+            ConnexionBdd bdd = new ConnexionBdd();
+            int idPartie = bdd.getDernierePartieId(pseudo);
+            if (idPartie != -1) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Jeu.fxml"));
+                    Parent root = loader.load();
+
+                    JeuController controller = loader.getController();
+                    controller.chargerPartieSolo(idPartie);
+
+                    Scene scene = new Scene(root, 1200, 900);
+                    scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+                    Stage stage = (Stage) origine.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setTitle("CogPursuit - Reprise");
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Aucune partie trouvée pour ce joueur.");
+            }
+        });
+    }
 
 
     @FXML

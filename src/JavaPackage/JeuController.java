@@ -55,6 +55,8 @@ public class JeuController implements Initializable {
     private cogPursuit.Question questionActuelle;
     private cogPursuit.Joueur joueurActuel;
     private int idPartieActuelle;
+    private int idJoueur;
+
 
 
 
@@ -92,6 +94,8 @@ public class JeuController implements Initializable {
         labelQuestion.setVisible(false);
         boxReponses.setVisible(false);
     }
+
+    
     
 
     private void chargerQuestion(int difficulte) {
@@ -123,6 +127,9 @@ public class JeuController implements Initializable {
     
         int deplacement = bonne ? questionActuelle.getDiff() : 1 - questionActuelle.getDiff();
         joueurActuel.deplacement(deplacement, partie.getTerrain());
+
+        ConnexionBdd bdd = new ConnexionBdd();
+        bdd.sauvegarderEtatPartie(idPartieActuelle, idJoueur, joueurActuel.getScore(), joueurActuel.getPos());
     
         // Affiche le feedback
         if (bonne) {
@@ -157,7 +164,6 @@ public class JeuController implements Initializable {
             boxFinPartie.setVisible(true);
             boxFinPartie.setManaged(true);
             
-            ConnexionBdd bdd = new ConnexionBdd();
             bdd.terminerPartie(idPartieActuelle);
             bdd.terminerPartie(idPartieActuelle); // Marque comme terminée
 
@@ -314,6 +320,7 @@ public class JeuController implements Initializable {
         ConnexionBdd bdd = new ConnexionBdd();
         int idPartie = bdd.creerPartieSolo(pseudo);
         this.idPartieActuelle = idPartie;
+        this.idJoueur = bdd.getIdJoueur(pseudo);
     
         if (idPartie != -1) {
             System.out.println("Partie créée pour " + pseudo + ", id partie : " + idPartie);
@@ -333,6 +340,27 @@ public class JeuController implements Initializable {
             System.out.println("Erreur lors de la création de la partie.");
         }
     }
+
+    public void chargerPartieSolo(int idPartie) {
+        ConnexionBdd bdd = new ConnexionBdd();
+        this.idPartieActuelle = idPartie;
+    
+        // 1. Récupère les infos du joueur depuis la BDD
+        cogPursuit.Joueur joueurSauvegarde = bdd.chargerJoueur(idPartie);
+        this.idJoueur = bdd.getIdJoueur(joueurSauvegarde.getPseudo());
+    
+        // 2. Reconstruit la partie avec le joueur
+        this.partie = new CogPursuit(); // terrain vide
+        this.partie.getListeJoueurs().add(joueurSauvegarde);
+        this.joueurActuel = joueurSauvegarde;
+    
+        // 3. Affiche le plateau et démarre
+        afficherPlateauGraphique();
+        demarrerTour();
+    
+        System.out.println("✅ Partie rechargée depuis la base avec le joueur " + joueurSauvegarde.getPseudo());
+    }
+    
     
     
     
