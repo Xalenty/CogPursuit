@@ -138,8 +138,15 @@ public class Question {
         }
     }
 
+    public ArrayList<String> getReponses() {
+        ArrayList<String> liste = new ArrayList<>();
+        for (int i = 1; i <= reponses.size(); i++) {
+            liste.add(reponses.get(i));
+        }
+        return liste;
+    }
     
-
+        
     public int getDiff() {
         return this.diff;
     }

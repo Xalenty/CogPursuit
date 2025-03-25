@@ -4,10 +4,19 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
 <AnchorPane fx:id="origine"
             xmlns="http://javafx.com/javafx/23.0.1"
@@ -23,18 +32,52 @@
                   layoutX="50"
                   hgap="5" vgap="5"
                   prefWidth="1100" prefHeight="600"
-                  AnchorPane.topAnchor="20.0"
-                  AnchorPane.leftAnchor="20.0"
-                  AnchorPane.rightAnchor="20.0">
+                  AnchorPane.topAnchor="150.0"
+                  AnchorPane.leftAnchor="100.0"
+                  AnchorPane.rightAnchor="100.0">
         </GridPane>
+
+        <VBox fx:id="zoneTour" spacing="10"
+              AnchorPane.bottomAnchor="150.0"
+              AnchorPane.leftAnchor="300.0"
+              AnchorPane.rightAnchor="20.0"
+              style="-fx-font-size: 18px;"> <!-- Taille par défaut dans cette section -->
+
+            <!-- Boutons fin de partie -->
+            <HBox fx:id="boxFinPartie" spacing="10" visible="false" managed="false">
+                <Button text="↺ Rejouer" onAction="#rejouerPartie" style="-fx-font-size: 18px;" />
+                <Button text="🏠 Retour menu" onAction="#retourMenu" style="-fx-font-size: 18px;" />
+            </HBox>
+
+            <!-- Label tour -->
+            <Label fx:id="labelTour" style="-fx-text-fill: white; -fx-font-size: 20px;" />
+
+            <!-- Choix difficulté -->
+            <HBox fx:id="boxDifficulte" spacing="10">
+                <Button text="Facile" onAction="#choisirFacile" style="-fx-font-size: 18px;" />
+                <Button text="Moyen" onAction="#choisirMoyen" style="-fx-font-size: 18px;" />
+                <Button text="Difficile" onAction="#choisirDifficile" style="-fx-font-size: 18px;" />
+            </HBox>
+
+            <!-- Question -->
+            <Label fx:id="labelQuestion" wrapText="true" style="-fx-text-fill: white; -fx-font-size: 20px;" />
+
+            <!-- Propositions -->
+            <VBox fx:id="boxReponses" spacing="5" style="-fx-font-size: 18px;" />
+
+            <!-- Feedback -->
+            <Label fx:id="labelFeedback" style="-fx-font-size: 18px;" />
+
+        </VBox>
 
         <!-- Classement des joueurs -->
         <VBox fx:id="classementBox"
               spacing="10"
               layoutX="20" layoutY="700"
               AnchorPane.bottomAnchor="20.0"
-              AnchorPane.leftAnchor="20.0">
-            <!-- Scores des joueurs -->
+              AnchorPane.leftAnchor="20.0"
+              style="-fx-font-size: 18px;">
+            <!-- Les scores seront ajoutés dynamiquement -->
         </VBox>
     </children>
 </AnchorPane>

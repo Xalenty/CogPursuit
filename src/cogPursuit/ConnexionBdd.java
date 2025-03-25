@@ -113,7 +113,6 @@ public class ConnexionBdd {
         return idPartie;
     }
     
-    
 
     /*
      * Ferme la connexion avec la base de données
@@ -222,6 +221,59 @@ public class ConnexionBdd {
         }
     }
 
+    public void terminerPartie(int idPartie) {
+        this.openConnexion();
+        try {
+            String query = "UPDATE Partie SET statut = ?, date_fini = CURRENT_TIMESTAMP WHERE id_partie = ?";
+            PreparedStatement stmt = this.con.prepareStatement(query);
+            stmt.setString(1, "terminée");
+            stmt.setInt(2, idPartie);
+            stmt.executeUpdate();
+            stmt.close();
+            System.out.println("Partie marquée comme terminée en base.");
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la mise à jour de la partie !");
+            e.printStackTrace();
+        } finally {
+            this.closeConnexion();
+        }
+    }
+
+    public void mettreAJourScore(int idPartie, String pseudo, int score, int position) {
+        this.openConnexion();
+        try {
+            // Récupérer l'id_joueur à partir du pseudo
+            int idJoueur = -1;
+            PreparedStatement stmt1 = this.con.prepareStatement(
+                "SELECT id_joueur FROM Joueur WHERE nom = ?"
+            );
+            stmt1.setString(1, pseudo);
+            ResultSet rs = stmt1.executeQuery();
+            if (rs.next()) {
+                idJoueur = rs.getInt("id_joueur");
+            }
+            stmt1.close();
+    
+            if (idJoueur != -1) {
+                PreparedStatement stmt2 = this.con.prepareStatement(
+                    "UPDATE Joueur_Partie SET score = ?, position = ? WHERE id_joueur = ? AND id_partie = ?"
+                );
+                stmt2.setInt(1, score);
+                stmt2.setInt(2, position);
+                stmt2.setInt(3, idJoueur);
+                stmt2.setInt(4, idPartie);
+                stmt2.executeUpdate();
+                stmt2.close();
+    
+                System.out.println("✅ Score et position mis à jour pour " + pseudo);
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeConnexion();
+        }
+    }
 
     /**
      * Récupère la liste des joueurs avec leur score total pour le classement.
