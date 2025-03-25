@@ -27,6 +27,7 @@ public class TerrainTest {
     public void testToString() {
         // Test pour vérifier la méthode toString() du terrain
         String result = terrain.toString();
+        System.out.println(result);  // Affiche le résultat pour vérification manuelle
         assertTrue(result.contains("Neurosciences"), "Le terrain devrait afficher des cases avec des thèmes");
     }
 

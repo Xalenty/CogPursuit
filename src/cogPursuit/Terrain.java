@@ -35,13 +35,18 @@ public class Terrain implements Parametre {
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < tailleMap; i++) {
-            if (i != 0 && (i + 1) % 10 == 0) {
-                System.out.println(map[i].toString());
-            } else {
-                System.out.print(map[i].toString());
+            sb.append(map[i].toString());
+
+            // Saut de ligne toutes les 10 cases pour une meilleure lisibilité
+            if ((i + 1) % 10 == 0) {
+                sb.append("\n");
             }
         }
-        return "";
+
+        return sb.toString();
     }
+
 }

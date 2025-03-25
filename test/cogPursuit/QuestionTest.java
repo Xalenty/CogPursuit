@@ -53,8 +53,9 @@ public class QuestionTest {
     public void testToString() {
         // Vérifie la représentation textuelle de la question.
         String result = questionFacile.toString();
-        assertTrue(result.contains("Theme"), "La chaîne retournée doit contenir le thème.");
-        assertTrue(result.contains("facile"), "La chaîne retournée doit contenir le niveau de difficulté.");
+        System.out.println(result);  // Affiche le résultat pour vérification manuelle
+        assertTrue(result.contains("Thème"), "La chaîne retournée doit contenir le thème.");
+        assertTrue(result.contains("Facile"), "La chaîne retournée doit contenir le niveau de difficulté.");
     }
 
     @Test
