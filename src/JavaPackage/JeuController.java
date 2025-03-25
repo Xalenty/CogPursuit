@@ -52,7 +52,6 @@ public class JeuController implements Initializable, Parametre {
     }
 
     private void setTerrain() {
-        affichage.setPrefSize(20, 400);
         affichage.setVisible(true);
         int maxx = 7, maxy = 7, compteur = 0;
         for (int i = 0; i < maxx; i++) {
