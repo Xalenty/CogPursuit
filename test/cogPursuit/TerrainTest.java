@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class TerrainTest {
 
     private Terrain terrain;
@@ -41,26 +46,32 @@ public class TerrainTest {
 
     @Test
     public void testCaseInitialisation() {
-        // Vérifie que les cases sont initialisées avec les bons thèmes
+        // Vérifie que les premières cases sont bien initialisées avec un thème valide
         Case case1 = terrain.getCase(0);
-        assertEquals("Neurosciences", case1.getTheme(), "Le thème de la première case devrait être 'Neurosciences'");
+        Case case10 = terrain.getCase(10);
 
-        Case case2 = terrain.getCase(10);  // Exemple avec la 10ème case
-        assertNotNull(case2, "La dixième case ne doit pas être nulle");
-        assertEquals("Perception et Cognition", case2.getTheme(), "Le thème de la dixième case devrait être 'Perception et Cognition'");
+        assertNotNull(case1, "La première case ne doit pas être nulle");
+        assertNotNull(case10, "La dixième case ne doit pas être nulle");
+
+        // Le thème doit appartenir à la liste des thèmes connus
+        List<String> themes = Arrays.asList(Parametre.listeTheme);
+        assertTrue(themes.contains(case1.getTheme()), "Le thème de la case 0 doit être un thème connu");
+        assertTrue(themes.contains(case10.getTheme()), "Le thème de la case 10 doit être un thème connu");
     }
+
 
     @Test
-    public void testCaseThemeCyclique() {
-        // Vérifie que les thèmes sont cycliques
-        Case case1 = terrain.getCase(0);
-        Case case11 = terrain.getCase(10);
-        Case case21 = terrain.getCase(20);
+    public void testThemesSontBienDistribues() {
+        Set<String> themesTrouves = new HashSet<>();
 
-        assertEquals(case1.getTheme(), "Neurosciences", "Le thème de la première case devrait être 'Neurosciences'");
-        assertEquals(case11.getTheme(), "Perception et Cognition", "Le thème de la 11ème case devrait être 'Perception et Cognition'");
-        assertEquals(case21.getTheme(), "Système Nerveux et Physiologie", "Le thème de la 21ème case devrait être 'Système Nerveux et Physiologie'");
+        for (int i = 0; i < Parametre.tailleMap; i++) {
+            themesTrouves.add(terrain.getCase(i).getTheme());
+        }
+
+        // Vérifie qu'au moins 2 (voire 3) thèmes différents ont été utilisés
+        assertTrue(themesTrouves.size() >= 2, "Il devrait y avoir au moins 2 thèmes différents sur le plateau");
     }
+
 
     @Test
     public void testGetCaseOutOfBounds() {

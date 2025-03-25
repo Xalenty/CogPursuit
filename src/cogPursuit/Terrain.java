@@ -4,29 +4,26 @@
  */
 package cogPursuit;
 
+import java.util.Random;
+
+
 public class Terrain implements Parametre {
 
     private Case[] map = new Case[tailleMap];
 
     public Terrain() {
-        int indiceTheme = 0;
-        int decoupe = 10; //defini manuellement le nombre de question sur un meme theme ici 10 par theme
-        int j = 0;
-
+        Random random = new Random(); // Pour générer des thèmes aléatoires
+    
         for (int i = 0; i < tailleMap; i++) {
-            if ((i+1)% decoupe == 0) {
-                
-                this.map[i] = new Case(i, listeTheme[indiceTheme]);
-                indiceTheme++;
-            }
-            else if((i+1)% decoupe != 0){
-                this.map[i] = new Case(i, listeTheme[indiceTheme]);
-            }
-             else {
-                System.out.println("TailleMap trop petite pour le nb de question par theme.");
-            }
+            // Tire un index de thème aléatoire
+            int indiceTheme = random.nextInt(listeTheme.length);
+            String themeAleatoire = listeTheme[indiceTheme];
+    
+            // Crée la case avec ce thème
+            this.map[i] = new Case(i, themeAleatoire);
         }
     }
+    
 
     public String afficherThemes() {
         StringBuilder sb = new StringBuilder();

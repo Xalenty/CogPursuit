@@ -78,9 +78,16 @@ public class CogPursuit implements Parametre {
                 System.out.println(terrain);
 
                 if (this.listeJ.get(i).fin()) {
-                    System.out.println(this.listeJ.get(i) + " a Gagné !");
+                    System.out.println("\n " + this.listeJ.get(i) + " a Gagné !\n");
+                
+                    System.out.println("Classement final :");
+                    for (Joueur joueur : listeJ) {
+                        System.out.println("- " + joueur + " : " + joueur.getScore() + " points");
+                    }
+                
                     return;
                 }
+                
             }
         }
     }
@@ -108,52 +115,60 @@ public class CogPursuit implements Parametre {
         int entreeJ = 0;
         Scanner scan = new Scanner(System.in);
         Case temp = t.getCase(j.getPos());
-
-        // selection difficulté
+    
+        // sélection de la difficulté
         boolean selection = false;
-
+    
         while (!selection) {
-            System.out.println("choisir une difficulter.\n Facile : 1\n Normal : 2\n Difficile : 3\n");
+            System.out.println("Choisir une difficulté :\n 1 - Facile\n 2 - Moyenne\n 3 - Difficile");
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-                if (entreeJ > 3 || entreeJ < 1) {
-                    System.out.println("degré de difficulté incorrecte.");
-                } else {
+                if (entreeJ >= 1 && entreeJ <= 3) {
                     selection = true;
+                } else {
+                    System.out.println("Degré de difficulté incorrect.");
                 }
-
             } else {
-                System.out.println("Type de difficultée incorrecte.");
+                System.out.println("Type de difficulté incorrect.");
+                scan.next(); // évite la boucle infinie
             }
         }
-
-        Question q = new Question(entreeJ, temp.getTheme()); //Création de la bonne question en fonction des paramètres
-        listeQ.add(q); //ajout de la Question à la liste des Q sorties
-        
-        // selection reponse
+    
+        // Création de la question
+        Question q = new Question(entreeJ, temp.getTheme());
+        listeQ.add(q);
+    
+        // sélection de la réponse
         selection = false;
         while (!selection) {
             System.out.println(q);
-
+    
             if (scan.hasNextInt()) {
                 entreeJ = scan.nextInt();
-
-                if (q.verification(entreeJ)) {
-                    j.addScore(q.getDiff());// mettre a jour le score
-                    j.deplacement(q.getDiff(), t); // +1 si facile, +2 si normal, +3 si difficile
-                    return;
-
+    
+                boolean bonneReponse = q.verification(entreeJ);
+    
+                // Ajout du score via la méthode personnalisée
+                j.ajouterScoreSelonDifficulte(bonneReponse, q.getDiff());
+    
+                // Déplacement
+                if (bonneReponse) {
+                    j.deplacement(q.getDiff(), t);
+                    System.out.println("Bonne réponse !");
                 } else {
                     j.deplacement(1 - q.getDiff(), t);
-
-                    return;
+                    System.out.println("Mauvaise réponse !");
                 }
-
+    
+                // Affichage du score actuel
+                System.out.println("Score de " + j + " : " + j.getScore() + " points\n");
+    
+                return;
+    
             } else {
                 System.out.println("Type de réponse incorrecte.");
-                scan.next(); // pour éviter une boucle infinie
+                scan.next();
             }
         }
-
-    }
+    }    
 }
