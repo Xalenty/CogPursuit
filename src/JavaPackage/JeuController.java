@@ -17,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+
 
 /**
  * FXML Controller class
@@ -29,43 +31,51 @@ public class JeuController implements Initializable, Parametre {
     private AnchorPane origine;
     @FXML
     private GridPane affichage;
-    
+    private StackPane[] map = new StackPane[30];
     private CogPursuit partie;
     private boolean charger = false;
 
     @FXML
     private Scene scene;
-    public JeuController(){
-    
-    
+
+    public JeuController() {
+
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         if (!charger) {
             Chargement();
-        } 
+        }
         setTerrain();
     }
-    
-    
+
     private void setTerrain() {
-          affichage.setPrefSize(20, 400);
-          affichage.setVisible(true);
+        affichage.setPrefSize(20, 400);
+        affichage.setVisible(true);
         int maxx = 7, maxy = 7, compteur = 0;
         for (int i = 0; i < maxx; i++) {
             for (int j = 0; j < maxy; j++) {
                 if (compteur < tailleMap) {
-                    StackPane casePane = new StackPane();
-                    casePane.setPrefSize(10, 10);
-                    casePane.setStyle("-fx-border-color: black; -fx-background-color: lightgray;");
-                    affichage.add(casePane, j, i);
+                    StackPane caseJeu = new StackPane();
+                    map[compteur]=caseJeu;//repertorie les bouton pour mettre laffichage a jour
+                    
+                    Label joueurs = new Label(compteur+1+"");//permettra de mettre les noms des joueurs sur une case
+                    joueurs.setStyle("-fx-font-size: 18px; -fx-text-fill: black;");
+                    caseJeu.setPrefSize(100, 100);
+                    caseJeu.setStyle("-fx-border-color: black; -fx-background-color: gray;");//peux changer en fonction theme
+                    caseJeu.setOpacity(1.0);
+
+                    caseJeu.getChildren().add(joueurs);
+                    affichage.add(caseJeu, (j+1), (i+1));
                     compteur++;
                 }
             }
         }
         Platform.runLater(() -> affichage.layout());//force la maj de l'affichage
     }
+
     private void Chargement() {
         origine.setFocusTraversable(true);
         origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
@@ -81,8 +91,8 @@ public class JeuController implements Initializable, Parametre {
         });
     }
 
-    private void miseajour() {
-
+    private void miseajourMap() {
+        
     }
 
     private void touchePressee(KeyEvent event) {

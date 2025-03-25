@@ -7,18 +7,16 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.layout.StackPane?>
 
 <AnchorPane fx:id="origine" xmlns="http://javafx.com/javafx/23.0.1" 
-           xmlns:fx="http://javafx.com/fxml/1" 
-           fx:controller="JavaPackage.JeuController" 
-           minWidth="400.0" minHeight="300.0"
-           maxWidth="1200" maxHeight="900" >
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="JavaPackage.JeuController" 
+            minWidth="400.0" minHeight="300.0"
+            maxWidth="1200" maxHeight="900" >
     <children>
-        <GridPane fx:id="affichage" prefHeight="408.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-           
-        </GridPane>
-        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        
+        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0"  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -37,5 +35,17 @@
                 </Menu>
             </menus>
         </MenuBar>
+        
+        <GridPane fx:id="affichage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <children>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="1">
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="0">
+                </StackPane>
+            </children>
+        </GridPane>
+    
     </children>
 </AnchorPane>
