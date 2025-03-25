@@ -25,10 +25,15 @@ public class JeuController implements Initializable {
     private AnchorPane origine;
     private CogPursuit partie;
     private boolean charger = false;
-    
+
     @FXML
     private Scene scene;
 
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -39,22 +44,22 @@ public class JeuController implements Initializable {
         }
 
     }
-    
-    private void Chargement(){
+
+    private void Chargement() {
         origine.setFocusTraversable(true);
-            origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
-                if (nScene != null) {
-                    scene = nScene;
-                    scene.setOnKeyPressed(this::touchePressee);
-                    origine.requestFocus(); //fait le focus une fois que la scène est définie
-                    charger = !charger;
-                } else {
-                    System.out.println("Chargement...");
-                }
-            });
-    
+        origine.sceneProperty().addListener((observable, aScene, nScene) -> {//permet de savoir quand le premier element du FXML est generer afin de recuperer la scene
+            if (nScene != null) {
+                scene = nScene;
+                scene.setOnKeyPressed(this::touchePressee);
+                origine.requestFocus(); //fait le focus une fois que la scène est définie
+                charger = !charger;
+            } else {
+                System.out.println("Chargement...");
+            }
+        });
+
     }
-        
+
     private void touchePressee(KeyEvent event) {
         if (KeyCode.ESCAPE == event.getCode()) {// Effectuer une action lorsque la touche "Échap" est pressée
             System.out.println("echap");

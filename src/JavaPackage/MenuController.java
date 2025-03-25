@@ -116,6 +116,11 @@ public class MenuController implements Initializable {
      */
     private boolean charger = false;
 
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle rb) { //se lance au chargement de la page FXML

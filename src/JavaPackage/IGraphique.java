@@ -15,6 +15,12 @@ import javafx.stage.Stage;
  * @author ztsuk
  */
 public class IGraphique extends Application {
+
+    /**
+     *
+     * @param primaryStage
+     * @throws IOException
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {// faire un thread ?
         try {

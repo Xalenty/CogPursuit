@@ -26,6 +26,10 @@ public class ConnexionBdd {
     private Connection con = null; // attribut récupérant la connexion à la BDD
 
     // constructeur de l'objet
+
+    /**
+     *Connection a la bdd
+     */
     public ConnexionBdd() {
         this.host = "mysql-jadam579.alwaysdata.net";     //adresse
         this.port = "3306";    //port
@@ -74,6 +78,13 @@ public class ConnexionBdd {
 //        this.closeConnexion();
 //        System.out.println("Salut c'est fermé");
 //    }
+
+    /**
+     *
+     * @param diff
+     * @param theme
+     * @return
+     */
     
     public ArrayList<String> recuperationQuestion(int diff, String theme) {
 
