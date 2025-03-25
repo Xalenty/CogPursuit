@@ -13,10 +13,10 @@
             xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="JavaPackage.JeuController" 
             minWidth="400.0" minHeight="300.0"
-            maxWidth="1200" maxHeight="900" >
+            maxWidth="1920" maxHeight="1080" >
     <children>
         
-        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0"  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MenuBar layoutY="2.0" prefHeight="25.0"  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -36,15 +36,8 @@
             </menus>
         </MenuBar>
         
-        <GridPane fx:id="affichage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-           <children>
-                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
-                </StackPane>
-                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="1">
-                </StackPane>
-                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="0">
-                </StackPane>
-            </children>
+        <GridPane fx:id="affichage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        
         </GridPane>
     
     </children>

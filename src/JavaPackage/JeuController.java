@@ -68,12 +68,11 @@ public class JeuController implements Initializable, Parametre {
                     caseJeu.setOpacity(1.0);
 
                     caseJeu.getChildren().add(joueurs);
-                    affichage.add(caseJeu, (j+1), (i+1));
+                    affichage.add(caseJeu,(j+1),(i+1));
                     compteur++;
                 }
             }
         }
-        Platform.runLater(() -> affichage.layout());//force la maj de l'affichage
     }
 
     private void Chargement() {
