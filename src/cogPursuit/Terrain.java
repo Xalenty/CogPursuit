@@ -27,11 +27,24 @@ public class Terrain implements Parametre {
             }
         }
     }
+
+    public String afficherThemes() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tailleMap; i++) {
+            sb.append("Case ").append(i).append(" → ").append(map[i].getTheme()).append("\n");
+        }
+        return sb.toString();
+    }
+    
     
 
     public Case getCase(int indice) {
-        return this.map[indice];
+        if (indice >= 0 && indice < tailleMap) {
+            return this.map[indice];
+        }
+        return null;
     }
+    
 
     @Override
     public String toString() {

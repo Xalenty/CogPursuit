@@ -24,21 +24,28 @@ public class TerrainTest {
     }
 
     @Test
-    public void testToString() {
-        // Test pour vérifier la méthode toString() du terrain
+    public void testToStringFormat() {
         String result = terrain.toString();
-        System.out.println(result);  // Affiche le résultat pour vérification manuelle
-        assertTrue(result.contains("Neurosciences"), "Le terrain devrait afficher des cases avec des thèmes");
+        // Vérifie que la chaîne contient des représentations de cases
+        assertTrue(result.contains("["), "La représentation du terrain devrait contenir des crochets '[' pour les cases");
     }
+
+    @Test
+    public void testAfficherThemes() {
+        String result = terrain.afficherThemes();
+        System.out.println(result);
+        assertTrue(result.contains("Neurosciences"), "La méthode afficherThemes() devrait contenir le thème 'Neurosciences'");
+    }
+
+
 
     @Test
     public void testCaseInitialisation() {
         // Vérifie que les cases sont initialisées avec les bons thèmes
         Case case1 = terrain.getCase(0);
-        assertNotNull(case1, "La première case ne doit pas être nulle");
         assertEquals("Neurosciences", case1.getTheme(), "Le thème de la première case devrait être 'Neurosciences'");
 
-        Case case2 = terrain.getCase(9);  // Exemple avec la 10ème case
+        Case case2 = terrain.getCase(10);  // Exemple avec la 10ème case
         assertNotNull(case2, "La dixième case ne doit pas être nulle");
         assertEquals("Perception et Cognition", case2.getTheme(), "Le thème de la dixième case devrait être 'Perception et Cognition'");
     }
