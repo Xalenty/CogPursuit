@@ -6,6 +6,7 @@ package cogPursuit;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,7 +77,7 @@ public class ConnexionBdd {
     
     public ArrayList<String> recuperationQuestion(int diff, String theme) {
 
-        ArrayList<String> resultatsString = new ArrayList();
+        ArrayList<String> res = new ArrayList<>();
 
         try {
             this.openConnexion();
@@ -99,14 +100,14 @@ public class ConnexionBdd {
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                resultatsString.add(String.valueOf(rs.getInt("id_question")));
-                resultatsString.add(rs.getString("enonce"));
-                resultatsString.add(rs.getString("choix_A"));
-                resultatsString.add(rs.getString("choix_B"));
-                resultatsString.add(rs.getString("choix_C"));
-                resultatsString.add(rs.getString("choix_D"));
-                resultatsString.add(rs.getString("q.reponse_correcte"));
-                resultatsString.add(rs.getString("theme"));
+                res.add(String.valueOf(rs.getInt("id_question")));
+                res.add(rs.getString("enonce"));
+                res.add(rs.getString("choix_A"));
+                res.add(rs.getString("choix_B"));
+                res.add(rs.getString("choix_C"));
+                res.add(rs.getString("choix_D"));
+                res.add(rs.getString("q.reponse_correcte"));
+                res.add(rs.getString("theme"));
             }
 
             // test du retour de l'array list
@@ -120,22 +121,20 @@ public class ConnexionBdd {
         } finally {
             this.closeConnexion();
         }
-        return resultatsString;
+        return res;
     }
 
     /**
      * Permet l'ajout d'un joueur dans la BDD
      *
      * @param pseudo le pseudo du joueur
-     * @param age l'âge du joueur
      */
     public void addJoueurBDD(String pseudo) {
         this.openConnexion();
         try {
-            Statement stmt = this.con.createStatement();
-            // comamande sql
-            stmt.executeUpdate("INSERT INTO Joueur VALUES (\"" + pseudo + "\"," + 0 + "," + 0 + "," + 0 + ",);");
-
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("INSERT INTO Joueur (nom) VALUES (\"" + pseudo + "\");");
+            stmt.close();
         } catch (SQLException ex) {
             Logger.getLogger(ConnexionBdd.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -144,21 +143,55 @@ public class ConnexionBdd {
     }
 
     /**
-     * Récupère la liste des Joueurs et leurs scores
+     * Permet de supprimer un joueur dans la BDD en fonction de son pseudo.
      *
-     * @return la liste des Joueurs et leurs scores
+     * @param pseudo le pseudo du joueur à supprimer
      */
-    public ArrayList<String> getJoueurBDD() {
+    public void delJoueurBDD(String pseudo) {
         this.openConnexion();
-        ArrayList<String> res = new ArrayList();
+        try {
+            String query = "DELETE FROM Joueur WHERE nom = ?";
+            PreparedStatement stmt = this.con.prepareStatement(query);
+            stmt.setString(1, pseudo);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnexionBdd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.closeConnexion();
+        }
+    }
+
+
+    /**
+     * Récupère la liste des joueurs avec leur score total pour le classement.
+     *
+     * @return une liste de chaînes contenant le pseudo et le score total.
+     */
+    public ArrayList<String> getClassementJoueursBDD() {
+        this.openConnexion();
+        ArrayList<String> res = new ArrayList<>();
         try {
             Statement stmt = this.con.createStatement();
-            // commande sql
-            ResultSet rs1 = stmt.executeQuery("SELECT Joueur.Pseudo");
-            // récupération des joueurs sous forme de Liste de String
-            while (rs1.next()) {
-                res.add("Pseudo : " + rs1.getString("pseudo"));
+
+            // Jointure entre Joueur et Joueur_Partie, regroupée par joueur
+            String query = """
+                SELECT j.nom, SUM(jp.score) AS score_total
+                FROM Joueur j
+                JOIN Joueur_Partie jp ON j.id_joueur = jp.id_joueur
+                GROUP BY j.id_joueur
+                ORDER BY score_total DESC;
+            """;
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String nom = rs.getString("nom");
+                int score = rs.getInt("score_total");
+                res.add("Pseudo : " + nom + " | Score total : " + score);
             }
+
+            stmt.close();
         } catch (SQLException ex) {
             Logger.getLogger(ConnexionBdd.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -167,22 +200,6 @@ public class ConnexionBdd {
         return res;
     }
 
-    /**
-     * Ajoute un point de victoire pour le joueur passé en paramètre
-     *
-     * @param pseudo nom du joueur gagnant
-     */
-    public void addPointVictory(String pseudo) {
-        this.openConnexion();
-        try {
-            Statement stmt = this.con.createStatement();
-            // commande update sql
-            stmt.executeUpdate("UPDATE Joueur SET PuzzleFinis = PuzzleFinis+1 WHERE Pseudo = \"" + pseudo + "\";");
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnexionBdd.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            this.closeConnexion();
-        }
-    }
+
 
 }

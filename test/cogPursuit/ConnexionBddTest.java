@@ -6,35 +6,49 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe de test JUnit 5 pour tester les principales méthodes de ConnexionBdd.
+ * Ces tests interagissent avec la base de données réelle.
+ */
 public class ConnexionBddTest {
 
+    ConnexionBdd bdd = new ConnexionBdd();
+
+    /**
+     * Teste l'ajout d'un joueur dans la base de données.
+     * Le pseudo est unique à chaque test pour éviter les doublons.
+     * Le test vérifie simplement qu'aucune exception n'est levée.
+     */
+    @Test
+    public void testAddJoueurBDD() {
+        String pseudoTest = "TestJoueur_" + System.currentTimeMillis(); // Pseudo unique
+        assertDoesNotThrow(() -> bdd.addJoueurBDD(pseudoTest), "L'ajout d'un joueur ne doit pas échouer");
+        bdd.delJoueurBDD(pseudoTest);  // Nettoyage après le test
+    }
+
+    /**
+     * Teste la récupération d'une question en base de données avec difficulté facile.
+     * Le thème "Neurosciences" doit exister dans la base.
+     * Vérifie que la question récupérée contient au moins 6 éléments (énoncé + choix).
+     */
     @Test
     public void testRecuperationQuestion() {
-        ConnexionBdd bdd = new ConnexionBdd();
-        ArrayList<String> result = bdd.recuperationQuestion(1, "Neurosciences"); 
-
-        // Vérifie que la liste n'est pas vide
-        assertFalse(result.isEmpty(), "La récupération de question ne devrait pas renvoyer une liste vide");
-        // Optionnel : on peut tester qu'elle contient au moins 6-8 éléments attendus
-        assertTrue(result.size() >= 6, "La question récupérée devrait contenir plusieurs champs");
+        ArrayList<String> question = bdd.recuperationQuestion(1, "Neurosciences");
+        assertNotNull(question, "La liste de question ne doit pas être nulle");
+        assertTrue(question.size() >= 6, "La question récupérée doit contenir au moins l'énoncé et les choix");
     }
 
+    /**
+     * Teste la méthode qui récupère le classement des joueurs avec leur score total.
+     * Vérifie que la liste retournée n'est pas vide.
+     * Affiche le classement pour vérification manuelle dans la console.
+     */
     @Test
-    public void testGetJoueurBDD() {
-        ConnexionBdd bdd = new ConnexionBdd();
-        ArrayList<String> joueurs = bdd.getJoueurBDD();
-
-        assertNotNull(joueurs, "La liste des joueurs ne doit pas être nulle");
-        joueurs.forEach(System.out::println);
-    }
-
-    @Test
-    public void testAddPointVictory() {
-        ConnexionBdd bdd = new ConnexionBdd();
-        // Remplacer par un pseudo existant dans la BDD
-        String pseudo = "testuser";
-
-        // Appel de la méthode (pas de retour à vérifier)
-        assertDoesNotThrow(() -> bdd.addPointVictory(pseudo), "L'ajout d'un point de victoire ne doit pas échouer");
-    }
+    public void testGetClassementJoueursBDD() {
+        ArrayList<String> classement = bdd.getClassementJoueursBDD();
+        System.out.println("Classement des joueurs :" + classement);
+        assertNotNull(classement, "La liste des classements ne doit pas être nulle");
+        assertTrue(classement.size() >= 1, "Il devrait y avoir au moins un joueur dans le classement");
+        classement.forEach(System.out::println); // Affichage dans la console
+    }    
 }

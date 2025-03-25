@@ -19,6 +19,12 @@ public class Joueur implements Parametre {
         this.pos = t.getCase(0); // origine de la carte
     }
 
+
+    public Joueur(String p, int score) {
+        this.pseudo = p;
+        this.score = score; // origine de la carte
+    }
+
     @Override
     public String toString() {
         return this.pseudo;
@@ -50,6 +56,30 @@ public class Joueur implements Parametre {
         else
             return false;
     }
+
+    /**
+     * Ajoute un score en fonction de la difficulté de la question
+     * @param bonneReponse 
+     * @param difficulte
+     */
+    public void ajouterScoreSelonDifficulte(boolean bonneReponse, int difficulte) {
+        if (!bonneReponse) return; // Pas de points si mauvaise réponse
+    
+        switch (difficulte) {
+            case 1: // Facile
+                this.addScore(100);
+                break;
+            case 2: // Moyenne
+                this.addScore(180);
+                break;
+            case 3: // Difficile
+                this.addScore(250);
+                break;
+            default:
+                System.out.println("Difficulté inconnue, aucun score ajouté.");
+        }
+    }
+    
 
     // deplacement__
     public void deplacement(int direction, Terrain t) {// direction correspond au resultat de la question {1 ,2 ,3, 0
