@@ -44,7 +44,7 @@ public class Question {
 
     public String getTheme() { // pour afficher le theme
 
-        return "";// this.theme;
+        return this.theme;
     }
 
     public boolean verification(int selection) { // verifie si la selection (indice de reponse) est la bonne reponse
@@ -55,33 +55,7 @@ public class Question {
             System.out.println("Mauvaise Réponse!\n__\n");
             return false;
         }
-    }
-
-    public boolean getQestion(int entreeJ, String theme) { // entreeJ represente la difficultée choisis
-
-        switch (entreeJ) { // renvoie vrai apres avoir recuperer la question
-            case 1: // facile
-                // recuperer ici la toutes les donnes de la question en fonction du theme
-                this.intituler = "facile"; // recuperer l'intituler de la bdd
-                this.diff = 1;
-                // charger les reponses
-                return true;
-            case 2: // normal
-                this.intituler = "normal";
-                this.diff = 2;
-
-                return true;
-            case 3: // difficile
-                this.intituler = "difficile";
-                this.diff = 3;
-
-                return true;
-            default:
-                return false; // si le degré de difficulté est incorrecte
-        }
-
-    }
-    
+    }  
     
     private int convertisseurIndice(String instring){
         int inint = 0;
@@ -128,3 +102,4 @@ public class Question {
     }
 
 }
+

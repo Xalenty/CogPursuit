@@ -65,7 +65,6 @@ public class MenuController implements Initializable {
      */
     @FXML
     private void btnPlay() {
-        System.out.println("Bouton play");
         inverseAffichage(hub, modeJeu);
 
     }
@@ -88,16 +87,15 @@ public class MenuController implements Initializable {
     @FXML
     private void solo() {
         try {
-            // Charger le second FXML pour le jeu
             FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("Jeu.fxml"));
-            Parent gameRoot = gameLoader.load();
+            Parent parent = gameLoader.load();
 
-            Scene gameScene = new Scene(gameRoot, 800, 600);
+            Scene sceneJeu = new Scene(parent, 800, 600);
 
             Stage stage = (Stage) origine.getScene().getWindow();
 
             // Afficher la scène du jeu
-            stage.setScene(gameScene);
+            stage.setScene(sceneJeu);
             stage.setTitle("CogPursuit - Jeu");
             stage.show();
         } catch (IOException e) {
